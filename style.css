@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+body {
+    background-color: black;
+    transition: all .3s ease-in-out;
+}
+
+.button {
+    padding: 10px;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    border-radius: 5px;
+    font-family: "Chakra Petch", serif;
+    transition: all .3s ease-in-out;
+}
+
+.button:hover {
+    background-color: white;
+    transform: scale(1.1);
+    color: black;
+    cursor: pointer;
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    
+    align-items: center;
+    justify-content: center;
+}
+
+.container > #addTasks {
+    color: white;
+    font-family: "Chakra Petch", serif;
+    width: 50vw;
+    height: 50vh;
+    padding: 100px;
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
+    justify-content: center;
+    border-radius: 25px;
+    border: 1px solid white;
+    box-shadow: 10px 5px 5px white; /* distância x | distância y | blur | cor */
+}
+
+.container > #addTasks > select {
+    color: white;
+    font-family: "Chakra Petch", serif;
+    background-color: black;
+    border-radius: 5px;
+}
+
+.container > #addTasks > label {
+    margin: 20px 0px 5px 0px; /* topo | direita | inferior | esquerda */
+}
+
+.container > #addTasks > input {
+   background-color: transparent;
+   border: 1px solid white;
+   border-radius: 5px;
+   outline: none;
+   color: white;
+   font-family: "Chakra Petch", serif;
+   padding-left: 5px;
+}
+
+.container > #addTasks > button {
+    margin: 20px 0px; /* cima e baixo | esquerda e direita */
+}
+ 
