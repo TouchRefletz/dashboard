@@ -1,5 +1,32 @@
 var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
 var addTasksContainer = document.getElementById("addTasksContainer");
+var tasksDiv = document.getElementById('tasksDiv');
+
+var tasks = ``;
+var tasksArray = [];
+
+function saveTasks() {
+    tasks = ``;
+    tasks += `<tasks>`
+    tasksArray.forEach(task => {
+            tasks += task;
+    })
+    tasks += `</tasks>`
+    localStorage.setItem('tasks',tasks.toString());
+    loadTasks();
+}
+
+function loadTasks() {
+    const parser = new DOMParser(); // Transformador de XML
+    
+    if (localStorage.getItem('tasks') == null) {
+        tasksDiv.innerHTML = 'Não existe nenhuma tarefa :(';
+    } else {
+        tasksDiv.innerHTML = '';
+        const xmlDoc = parser.parseFromString(localStorage.getItem('tasks'), "text/xml"); // Transformando XML em objeto
+        tasksDiv.appendChild(xmlDoc.documentElement);
+    } 
+}
 
 showAddTaskMenuButton.addEventListener("click", () => {
     addTasksContainer.classList.remove("hidden"); /* mostra a div */
@@ -14,14 +41,23 @@ showAddTaskMenuButton.addEventListener("click", () => {
         var taskPriority = document.getElementById('taskPriority');
         var taskProgress = document.getElementById('taskProgress');
 
-        var task = {
-            title: taskTitle.value,
-            description: taskDescription.value,
-            date: taskDate.value,
-            priority: taskPriority.value,
-            progress: taskProgress.value
-        }
+        var tasksLength = tasks.length;
 
-        console.log(task);
+        var task = `
+        <task>
+            <title>${taskTitle.value}</title>
+            <description>${taskDescription.value}</description>
+            <date>${taskDate.value}</date>
+            <priority>${taskPriority.value}</priority>
+            <progress>${taskProgress.value}</progress>
+        </task>
+        `
+        addTasksContainer.style.display = 'none';
+        addTasksContainer.classList.add("hidden"); /* esconde a div */
+
+        tasksArray.push(task);
+        saveTasks();
     })
 })
+
+loadTasks();
