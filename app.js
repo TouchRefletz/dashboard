@@ -18,13 +18,19 @@ function saveTasks() {
 
 function loadTasks() {
     const parser = new DOMParser(); // Transformador de XML
+    tasks = localStorage.getItem('tasks');
     
     if (localStorage.getItem('tasks') == null) {
         tasksDiv.innerHTML = 'Não existe nenhuma tarefa :(';
     } else {
         tasksDiv.innerHTML = '';
         const xmlDoc = parser.parseFromString(localStorage.getItem('tasks'), "text/xml"); // Transformando XML em objeto
+        console.log(xmlDoc.documentElement.innerHTML)
         tasksDiv.appendChild(xmlDoc.documentElement);
+
+        const tasks = document.querySelectorAll('task');
+        const taskArray = Array.from(tasks).map(task => task.outerHTML);
+        tasksArray = taskArray;
     } 
 }
 
@@ -41,15 +47,19 @@ showAddTaskMenuButton.addEventListener("click", () => {
         var taskPriority = document.getElementById('taskPriority');
         var taskProgress = document.getElementById('taskProgress');
 
-        var tasksLength = tasks.length;
+        var time = taskDate.value;
+        time = time.split('T')
+        timeArray = time[0].replaceAll('-','/').split('/')
+        time[0] = `${timeArray[2]}/${timeArray[1]}/${timeArray[0]}`
+        time = `${time[0]}, ${time[1]}`
 
         var task = `
         <task>
             <title>${taskTitle.value}</title>
             <description>${taskDescription.value}</description>
-            <date>${taskDate.value}</date>
-            <priority>${taskPriority.value}</priority>
-            <progress>${taskProgress.value}</progress>
+            <date>Para: ${time}</date>
+            <priority>Prioridade: ${taskPriority.value}</priority>
+            <progress>Status: ${taskProgress.value}</progress>
         </task>
         `
         addTasksContainer.style.display = 'none';

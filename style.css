@@ -17,6 +17,15 @@ tasks {
     flex-wrap: wrap;
 }
 
+title {
+    font-size: 30px;
+}
+
+description {
+    margin-left: 2px;
+    margin-bottom: 10px; 
+}
+
 .tasks {
     font-family: "Chakra Petch", serif;
     color: white;
@@ -72,7 +81,7 @@ body {
     padding: 100px;
     display: flex;
     flex-direction: column;
-    background-color: transparent;
+    background-color: black;
     justify-content: center;
     border-radius: 25px;
     border: 1px solid white;
