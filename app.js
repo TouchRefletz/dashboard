@@ -1,9 +1,13 @@
 var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
 var addTasksContainer = document.getElementById("addTasksContainer");
 var tasksDiv = document.getElementById('tasksDiv');
+var editTaskButtons = document.getElementsByClassName('editTask');
+var addTaskButton = document.getElementById('addTaskButton');
 
 var tasks = ``;
 var tasksArray = [];
+var editTaskBoolean = false;
+var taskIdFromButton;
 
 function saveTasks() {
     tasks = ``;
@@ -17,6 +21,11 @@ function saveTasks() {
 }
 
 function loadTasks() {
+    if (editTaskBoolean) {
+        addTaskButton.removeEventListener('click', callEditButton);
+        addTaskButton.addEventListener('click', createTask);
+    }
+
     const parser = new DOMParser(); // Transformador de XML
     tasks = localStorage.getItem('tasks');
     
@@ -25,23 +34,56 @@ function loadTasks() {
     } else {
         tasksDiv.innerHTML = '';
         const xmlDoc = parser.parseFromString(localStorage.getItem('tasks'), "text/xml"); // Transformando XML em objeto
-        console.log(xmlDoc.documentElement.innerHTML)
         tasksDiv.appendChild(xmlDoc.documentElement);
 
         const tasks = document.querySelectorAll('task');
         const taskArray = Array.from(tasks).map(task => task.outerHTML);
         tasksArray = taskArray;
+
+        activateEditButtons();
     } 
 }
 
-showAddTaskMenuButton.addEventListener("click", () => {
+function activateEditButtons() {
+    editTaskButtons = document.getElementsByClassName('editTask');
+    for (var i = 0; i < editTaskButtons.length; i++) {
+        addEditTaskEventListener(editTaskButtons[i]);
+    }
+}
+
+function addEditTaskEventListener(button) {
+    button.addEventListener('click', () => {
+        var taskFromButton = button.parentElement;
+        taskIdFromButton = button.parentElement.id;
+        openTaskManagerMenu();
+
+        addTaskButton.removeEventListener('click', createTask);
+        addTaskButton.addEventListener('click', callEditButton);
+
+        tasksDiv.childNodes[0].removeChild(taskFromButton);
+        
+        for (var i = 0; i < tasksArray.length; i++) {
+            if (tasksArray[i].includes(taskIdFromButton)) {
+                tasksArray.splice(i, 1);
+            }
+        }
+    });
+}
+
+function callEditButton() {
+    editTaskBoolean = true;
+    createTask(taskIdFromButton);
+    editTaskBoolean = false;
+    taskIdFromButton = '';
+}
+
+function openTaskManagerMenu() {
     addTasksContainer.classList.remove("hidden"); /* mostra a div */
     addTasksContainer.style.display = 'flex';
+}
 
-    var addTaskButton = document.getElementById('addTaskButton');
-
-    addTaskButton.addEventListener('click', () => {
-        var taskTitle = document.getElementById("taskTitle");
+function createTask(taskId=Math.floor(Math.random() * 10**8)) {
+    var taskTitle = document.getElementById("taskTitle");
         var taskDescription = document.getElementById("taskDescription");
         var taskDate = document.getElementById("taskDate");
         var taskPriority = document.getElementById('taskPriority');
@@ -54,12 +96,14 @@ showAddTaskMenuButton.addEventListener("click", () => {
         time = `${time[0]}, ${time[1]}`
 
         var task = `
-        <task>
+        <task id="${taskId}">
             <title>${taskTitle.value}</title>
             <description>${taskDescription.value}</description>
             <date>Para: ${time}</date>
             <priority>Prioridade: ${taskPriority.value}</priority>
             <progress>Status: ${taskProgress.value}</progress>
+            <button id="${taskId}" class="editTask">Editar</button>
+            <button id="${taskId}" class="deleteTask">Excluir</button>
         </task>
         `
         addTasksContainer.style.display = 'none';
@@ -67,7 +111,10 @@ showAddTaskMenuButton.addEventListener("click", () => {
 
         tasksArray.push(task);
         saveTasks();
-    })
-})
+}
+
+showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu)
+
+addTaskButton.addEventListener('click', createTask);
 
 loadTasks();
