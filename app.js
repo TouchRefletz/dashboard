@@ -1,3 +1,5 @@
+/* VARIAVEIS */
+
 var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
 var addTasksContainer = document.getElementById("addTasksContainer");
 var tasksDiv = document.getElementById('tasksDiv');
@@ -8,6 +10,8 @@ var tasks = ``;
 var tasksArray = [];
 var editTaskBoolean = false;
 var taskIdFromButton = '';
+
+/* FUNÇÔES */
 
 function saveTasks() {
     tasks = ``;
@@ -121,6 +125,8 @@ function createTask() {
     saveTasks();
     taskIdFromButton = '';
 }
+
+/* COMEÇO DA EXECUÇÂO DO CODE */
 
 showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu)
 
