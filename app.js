@@ -7,7 +7,7 @@ var addTaskButton = document.getElementById('addTaskButton');
 var tasks = ``;
 var tasksArray = [];
 var editTaskBoolean = false;
-var taskIdFromButton;
+var taskIdFromButton = '';
 
 function saveTasks() {
     tasks = ``;
@@ -82,35 +82,44 @@ function openTaskManagerMenu() {
     addTasksContainer.style.display = 'flex';
 }
 
-function createTask(taskId=Math.floor(Math.random() * 10**8)) {
+function randomizeNumber() {
+    return Math.floor(Math.random() * 10**8);
+}
+
+function createTask() {
+    if (taskIdFromButton == '') {
+        taskIdFromButton = randomizeNumber();
+    }
+
     var taskTitle = document.getElementById("taskTitle");
-        var taskDescription = document.getElementById("taskDescription");
-        var taskDate = document.getElementById("taskDate");
-        var taskPriority = document.getElementById('taskPriority');
-        var taskProgress = document.getElementById('taskProgress');
+    var taskDescription = document.getElementById("taskDescription");
+    var taskDate = document.getElementById("taskDate");
+    var taskPriority = document.getElementById('taskPriority');
+    var taskProgress = document.getElementById('taskProgress');
 
-        var time = taskDate.value;
-        time = time.split('T')
-        timeArray = time[0].replaceAll('-','/').split('/')
-        time[0] = `${timeArray[2]}/${timeArray[1]}/${timeArray[0]}`
-        time = `${time[0]}, ${time[1]}`
+    var time = taskDate.value;
+    time = time.split('T')
+    timeArray = time[0].replaceAll('-','/').split('/')
+    time[0] = `${timeArray[2]}/${timeArray[1]}/${timeArray[0]}`
+    time = `${time[0]}, ${time[1]}`
 
-        var task = `
-        <task id="${taskId}">
-            <title>${taskTitle.value}</title>
-            <description>${taskDescription.value}</description>
-            <date>Para: ${time}</date>
-            <priority>Prioridade: ${taskPriority.value}</priority>
-            <progress>Status: ${taskProgress.value}</progress>
-            <button id="${taskId}" class="editTask">Editar</button>
-            <button id="${taskId}" class="deleteTask">Excluir</button>
-        </task>
-        `
-        addTasksContainer.style.display = 'none';
-        addTasksContainer.classList.add("hidden"); /* esconde a div */
+    var task = `
+    <task id="${taskIdFromButton}">
+        <title>${taskTitle.value}</title>
+        <description>${taskDescription.value}</description>
+        <date>Para: ${time}</date>
+        <priority>Prioridade: ${taskPriority.value}</priority>
+        <progress>Status: ${taskProgress.value}</progress>
+        <button id="${taskIdFromButton}" class="editTask">Editar</button>
+        <button id="${taskIdFromButton}" class="deleteTask">Excluir</button>
+    </task>
+    `
+    addTasksContainer.style.display = 'none';
+    addTasksContainer.classList.add("hidden"); /* esconde a div */
 
-        tasksArray.push(task);
-        saveTasks();
+    tasksArray.push(task);
+    saveTasks();
+    taskIdFromButton = '';
 }
 
 showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu)
