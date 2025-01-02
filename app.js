@@ -1,10 +1,10 @@
 /* VARIAVEIS */
 
-var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
 var addTasksContainer = document.getElementById("addTasksContainer");
 var tasksDiv = document.getElementById('tasksDiv');
 var editTaskButtons = document.getElementsByClassName('editTask');
 var addTaskButton = document.getElementById('addTaskButton');
+var closeTaskMenuButton = document.getElementById("closeTaskMenuButton");
 
 var tasks = ``;
 var tasksArray = [];
@@ -19,6 +19,11 @@ function saveTasks() {
     tasksArray.forEach(task => {
             tasks += task;
     })
+    tasks += `
+    <task id="showAddTaskMenuButton">
+        <p>+</p>
+    </task>
+    `
     tasks += `</tasks>`
     localStorage.setItem('tasks',tasks.toString());
     loadTasks();
@@ -35,6 +40,11 @@ function loadTasks() {
     
     if (localStorage.getItem('tasks') == null) {
         tasksDiv.innerHTML = 'Não existe nenhuma tarefa :(';
+        tasksDiv.innerHTML = `
+        <task id="showAddTaskMenuButton">
+            <p>+</p>
+        </task>
+        `
     } else {
         tasksDiv.innerHTML = '';
         const xmlDoc = parser.parseFromString(localStorage.getItem('tasks'), "text/xml"); // Transformando XML em objeto
@@ -46,6 +56,8 @@ function loadTasks() {
 
         activateEditButtons();
     } 
+    var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
+    showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu);
 }
 
 function activateEditButtons() {
@@ -118,18 +130,23 @@ function createTask() {
         <button id="${taskIdFromButton}" class="deleteTask">Excluir</button>
     </task>
     `
-    addTasksContainer.style.display = 'none';
-    addTasksContainer.classList.add("hidden"); /* esconde a div */
 
     tasksArray.push(task);
     saveTasks();
     taskIdFromButton = '';
 }
 
+function closeTaskMenu() {
+    if (taskIdFromButton != '') {
+        loadTasks();
+    }
+    addTasksContainer.style.display = 'none';
+    addTasksContainer.classList.add("hidden"); /* esconde a div */
+}
+
 /* COMEÇO DA EXECUÇÂO DO CODE */
 
-showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu)
-
 addTaskButton.addEventListener('click', createTask);
+closeTaskMenuButton.addEventListener('click', closeTaskMenu);
 
 loadTasks();
