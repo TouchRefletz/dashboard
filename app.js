@@ -3,6 +3,7 @@
 var addTasksContainer = document.getElementById("addTasksContainer");
 var tasksDiv = document.getElementById('tasksDiv');
 var editTaskButtons = document.getElementsByClassName('editTask');
+var deleteTaskButtons = document.getElementsByClassName('deleteTask');
 var addTaskButton = document.getElementById('addTaskButton');
 var closeTaskMenuButton = document.getElementById("closeTaskMenuButton");
 
@@ -19,11 +20,6 @@ function saveTasks() {
     tasksArray.forEach(task => {
             tasks += task;
     })
-    tasks += `
-    <task id="showAddTaskMenuButton">
-        <p>+</p>
-    </task>
-    `
     tasks += `</tasks>`
     localStorage.setItem('tasks',tasks.toString());
     loadTasks();
@@ -40,11 +36,6 @@ function loadTasks() {
     
     if (localStorage.getItem('tasks') == null) {
         tasksDiv.innerHTML = 'Não existe nenhuma tarefa :(';
-        tasksDiv.innerHTML = `
-        <task id="showAddTaskMenuButton">
-            <p>+</p>
-        </task>
-        `
     } else {
         tasksDiv.innerHTML = '';
         const xmlDoc = parser.parseFromString(localStorage.getItem('tasks'), "text/xml"); // Transformando XML em objeto
@@ -55,7 +46,15 @@ function loadTasks() {
         tasksArray = taskArray;
 
         activateEditButtons();
+        activateDeleteButtons();
     } 
+    if (!tasksDiv.innerHTML.includes(`<task id="showAddTaskMenuButton"><p>+</p></task>`)) {
+        tasksDiv.innerHTML += `
+            <task id="showAddTaskMenuButton">
+                <p>+</p>
+            </task>
+        `;    
+    }
     var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
     showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu);
 }
@@ -64,6 +63,13 @@ function activateEditButtons() {
     editTaskButtons = document.getElementsByClassName('editTask');
     for (var i = 0; i < editTaskButtons.length; i++) {
         addEditTaskEventListener(editTaskButtons[i]);
+    }
+}
+
+function activateDeleteButtons() {
+    deleteTaskButtons = document.getElementsByClassName('deleteTask');
+    for (var i = 0; i < deleteTaskButtons.length; i++) {
+        addDeleteTaskEventListener(deleteTaskButtons[i]);
     }
 }
 
@@ -83,6 +89,23 @@ function addEditTaskEventListener(button) {
                 tasksArray.splice(i, 1);
             }
         }
+    });
+}
+
+function addDeleteTaskEventListener(button) {
+    button.addEventListener('click', () => {
+        var taskFromButton = button.parentElement;
+        taskIdFromButton = button.parentElement.id;
+
+        tasksDiv.childNodes[0].removeChild(taskFromButton);
+        
+        for (var i = 0; i < tasksArray.length; i++) {
+            if (tasksArray[i].includes(taskIdFromButton)) {
+                tasksArray.splice(i, 1);
+            }
+        }
+
+        saveTasks();
     });
 }
 
@@ -121,11 +144,11 @@ function createTask() {
 
     var task = `
     <task id="${taskIdFromButton}">
-        <title>${taskTitle.value}</title>
-        <description>${taskDescription.value}</description>
-        <date>Para: ${time}</date>
-        <priority>Prioridade: ${taskPriority.value}</priority>
-        <progress>Status: ${taskProgress.value}</progress>
+        <taskTitle>${taskTitle.value}</taskTitle>
+        <taskDescription>${taskDescription.value}</taskDescription>
+        <taskDate>Para: ${time}</taskDate>
+        <taskPriority>Prioridade: ${taskPriority.value}</taskPriority>
+        <taskProgress>Status: ${taskProgress.value}</taskProgress>
         <button id="${taskIdFromButton}" class="editTask">Editar</button>
         <button id="${taskIdFromButton}" class="deleteTask">Excluir</button>
     </task>
@@ -134,6 +157,7 @@ function createTask() {
     tasksArray.push(task);
     saveTasks();
     taskIdFromButton = '';
+    closeTaskMenu();
 }
 
 function closeTaskMenu() {
