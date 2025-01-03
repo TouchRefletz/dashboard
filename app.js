@@ -6,6 +6,8 @@ var editTaskButtons = document.getElementsByClassName('editTask');
 var deleteTaskButtons = document.getElementsByClassName('deleteTask');
 var addTaskButton = document.getElementById('addTaskButton');
 var closeTaskMenuButton = document.getElementById("closeTaskMenuButton");
+var searchButton = document.getElementById('searchButton');
+var searchInput = document.getElementById('search');
 
 var tasks = ``;
 var tasksArray = [];
@@ -34,6 +36,25 @@ function verifyAddTaskButton() {
     document.getElementsByTagName('tasks')[0].innerHTML += `<addTask id="showAddTaskMenuButton">+</addTask>`;
 }
 
+function search() {
+    var array = document.getElementsByTagName('tasks')[0].getElementsByTagName('task');
+    var searchText = searchInput.value.toLowerCase();
+    for (var i = 0; i < array.length; i++) {
+        var titleText = array[i].getElementsByTagName('tasktitle')[0].innerHTML.toLowerCase();
+
+        if (!titleText.includes(searchText)) {
+            document.getElementsByTagName('tasks')[0].removeChild(array[i]);
+        }
+    }
+}
+
+function activateSearch() {
+    if (searchInput.value == '') {
+        loadTasks();
+    } else {
+        search();
+    }
+}
 
 function loadTasks() {
     if (editTaskBoolean) {
@@ -59,6 +80,11 @@ function loadTasks() {
 
     activateEditButtons();
     activateDeleteButtons();
+    
+    addTaskButton.addEventListener('click', createTask);
+    closeTaskMenuButton.addEventListener('click', closeTaskMenu);
+    searchButton.addEventListener('click', search);
+    searchInput.addEventListener('input', activateSearch);
 }
 
 function activateEditButtons() {
@@ -171,8 +197,5 @@ function closeTaskMenu() {
 }
 
 /* COMEÇO DA EXECUÇÂO DO CODE */
-
-addTaskButton.addEventListener('click', createTask);
-closeTaskMenuButton.addEventListener('click', closeTaskMenu);
 
 loadTasks();
