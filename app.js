@@ -21,9 +21,19 @@ function saveTasks() {
             tasks += task;
     })
     tasks += `</tasks>`
-    localStorage.setItem('tasks',tasks.toString());
+    localStorage.setItem('tasks',tasks.toString())
     loadTasks();
 }
+
+function verifyAddTaskButton() {
+    var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
+    if (showAddTaskMenuButton != null) {
+        document.getElementsByTagName('tasks')[0].removeChild(showAddTaskMenuButton);
+    }
+
+    document.getElementsByTagName('tasks')[0].innerHTML += `<addTask id="showAddTaskMenuButton">+</addTask>`;
+}
+
 
 function loadTasks() {
     if (editTaskBoolean) {
@@ -34,29 +44,21 @@ function loadTasks() {
     const parser = new DOMParser(); // Transformador de XML
     tasks = localStorage.getItem('tasks');
     
-    if (localStorage.getItem('tasks') == null) {
-        tasksDiv.innerHTML = 'Não existe nenhuma tarefa :(';
-    } else {
+    if (tasks != null) {
         tasksDiv.innerHTML = '';
-        const xmlDoc = parser.parseFromString(localStorage.getItem('tasks'), "text/xml"); // Transformando XML em objeto
+        const xmlDoc = parser.parseFromString(tasks, "text/xml"); // Transformando XML em objeto
         tasksDiv.appendChild(xmlDoc.documentElement);
 
-        const tasks = document.querySelectorAll('task');
-        const taskArray = Array.from(tasks).map(task => task.outerHTML);
+        const tasksElements = document.querySelectorAll('task');
+        const taskArray = Array.from(tasksElements).map(task => task.outerHTML);
         tasksArray = taskArray;
-
-        activateEditButtons();
-        activateDeleteButtons();
-    } 
-    if (!tasksDiv.innerHTML.includes(`<task id="showAddTaskMenuButton"><p>+</p></task>`)) {
-        tasksDiv.innerHTML += `
-            <task id="showAddTaskMenuButton">
-                <p>+</p>
-            </task>
-        `;    
     }
+    verifyAddTaskButton();
     var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
     showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu);
+
+    activateEditButtons();
+    activateDeleteButtons();
 }
 
 function activateEditButtons() {

@@ -9,6 +9,46 @@
     display: none;
 }
 
+#search {
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 50px;
+    outline: none;
+    color: white;
+    font-family: "Chakra Petch", serif;
+    padding-left: 5px;
+    font-size: 20px;
+    width: 80%;
+    padding-left: 20px;
+    height: 50%;
+}
+
+#searchButton {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    border-radius: 5px;
+    font-family: "Chakra Petch", serif;
+    transition: all .1s ease-in-out;
+    position: absolute;
+    right: 11%;
+}
+
+#searchButton:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+#containerSearch {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10vh;
+    margin-right: 0px;
+}
+
 tasks {
     color: white;
     font-family: "Chakra Petch", serif;
@@ -52,6 +92,8 @@ task > button:hover {
     width: 150px;
     height: 150px;
     color: white;
+    border-radius: 20px;
+    border: 1px solid white;
     transition: all .3s ease-in-out;
 }
 
@@ -71,9 +113,13 @@ taskDescription {
     margin-bottom: 10px; 
 }
 
-.tasks {
+tasks {
     font-family: "Chakra Petch", serif;
     color: white;
+    margin: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 task {
