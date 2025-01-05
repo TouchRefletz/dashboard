@@ -14,6 +14,7 @@ var chooseFilterButton = document.getElementById("chooseFilterButton");
 var selectFilter = document.getElementById('selectFilter');
 var graphics = document.getElementById('graphics');
 var drawInGraphics = graphics.getContext('2d');
+var selectGraphics = document.getElementById('selectGraphics');
 
 var tasks = ``;
 var tasksArray = [];
@@ -104,6 +105,7 @@ function loadTasks() {
     filterButton.addEventListener('click', filter);
     chooseFilterButton.addEventListener('click', closeFilterMenu);
     searchInput.addEventListener('input', activateSearch);
+    selectGraphics.addEventListener('change', constructGraphics)
 }
 
 function closeFilterMenu() {
@@ -236,7 +238,7 @@ function arcCircle(centerX, centerY, radius, startAngle, endAngle, color) {
     drawInGraphics.fill();
 }
 
-function constructGraphics() {
+function constructPizzaGraphics() {
     var radius = 70;
     var centerX = graphics.width / 2;
     var centerY = graphics.height / 2;
@@ -266,6 +268,18 @@ function constructGraphics() {
     arcCircle(centerX, centerY, radius, 0, taskNotStartedPercent, 'red');
     arcCircle(centerX, centerY, radius, taskNotStartedPercent, taskNotStartedPercent + taskUnfinishedPercent, 'white');
     arcCircle(centerX, centerY, radius, taskUnfinishedPercent + taskNotStartedPercent,  2 * Math.PI, 'green');
+}
+
+function constructBarGraphics() {
+    // fazer gráfico de barras aqui
+}
+
+function constructGraphics() {
+    if (selectGraphics.value == "Gráfico de Pizza") {
+        constructPizzaGraphics();
+    } else {
+        constructBarGraphics();
+    }
 }
 
 /* COMEÇO DA EXECUÇÂO DO CODE */

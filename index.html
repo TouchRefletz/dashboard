@@ -31,21 +31,31 @@
     <div class="tasks" id="tasksDiv"></div>
 
     <div id="graphicsContainer">
-        <canvas id="graphics"></canvas>
-        <div>
+        <div id="graphicsDiv">
+            <select id="selectGraphics">
+                <option>Gráfico de Pizza</option>
+                <option>Gráfico de Barra</option>
+            </select>
+    
             <div>
-                <div style="background-color: red;"></div>
-                <p>Tarefas Pendentes</p>
-            </div>
-            
-            <div>
-                <div style="background-color: white;"></div>
-                <p>Tarefas Em Andamento</p>
-            </div>
-            
-            <div>
-                <div style="background-color: green;"></div>
-                <p>Tarefas Concluídas</p>
+                <canvas id="graphics"></canvas>
+
+                <div id="graphicsColorsDiv">
+                    <div>
+                        <div style="background-color: red;"></div>
+                        <p>Tarefas Pendentes</p>
+                    </div>
+                    
+                    <div>
+                        <div style="background-color: white;"></div>
+                        <p>Tarefas Em Andamento</p>
+                    </div>
+                    
+                    <div>
+                        <div style="background-color: green;"></div>
+                        <p>Tarefas Concluídas</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

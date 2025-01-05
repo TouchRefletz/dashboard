@@ -21,26 +21,40 @@ body {
     flex-direction: column;
 }
 
-#graphicsContainer > div {
+#graphicsDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse;
+}
+
+#selectGraphics {
+    color: white;
+    font-family: "Chakra Petch", serif;
+    background-color: black;
+    border-radius: 5px;
+}
+
+#graphicsColorsDiv {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
 
-#graphicsContainer > div > div > div {
+#graphicsColorsDiv > div > div{
     width: 20px;
     height: 20px;
     margin-right: 10px;
 }
 
-#graphicsContainer > div > div {
+#graphicsColorsDiv > div {
     display: flex;
     align-items: center;
     margin: 20px 0px;
 }
 
-#graphicsContainer > div > div > p {
+#graphicsColorsDiv > div > p {
     color: white;
     font-family: "Chakra Petch", serif;
     font-size: 20px;
