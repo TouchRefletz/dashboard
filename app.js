@@ -15,6 +15,7 @@ var selectFilter = document.getElementById('selectFilter');
 var graphics = document.getElementById('graphics');
 var drawInGraphics = graphics.getContext('2d');
 var selectGraphics = document.getElementById('selectGraphics');
+var barGraphicsDiv = document.getElementById('barGraphics');
 
 var tasks = ``;
 var tasksArray = [];
@@ -239,7 +240,10 @@ function arcCircle(centerX, centerY, radius, startAngle, endAngle, color) {
 }
 
 function constructPizzaGraphics() {
-    var radius = 70;
+    graphics.style.display = 'block';
+    barGraphicsDiv.style.display = 'none';
+
+    var radius = 100;
     var centerX = graphics.width / 2;
     var centerY = graphics.height / 2;
     var tasksHtmlArray = document.getElementsByTagName('task');
@@ -270,8 +274,46 @@ function constructPizzaGraphics() {
     arcCircle(centerX, centerY, radius, taskUnfinishedPercent + taskNotStartedPercent,  2 * Math.PI, 'green');
 }
 
+function createGraphicBar(percent, color) {
+    var div = document.createElement('div');
+    div.classList.add('graphicBar');
+    div.style.height = `${percent}%`;
+    div.style.backgroundColor = `${color}`;
+    barGraphicsDiv.appendChild(div);
+}
+
 function constructBarGraphics() {
-    // fazer gráfico de barras aqui
+    drawInGraphics.clearRect(0, 0, graphics.width, graphics.height);
+    graphics.style.display = 'none';
+    barGraphicsDiv.style.display = 'flex';
+
+    var tasksHtmlArray = document.getElementsByTagName('task');
+
+    var taskUnfinished = 0;
+    var taskNotStarted = 0;
+
+    for (var i = 0; i < tasksHtmlArray.length; i++) {
+        var taskStatus = tasksHtmlArray[i].getElementsByTagName('taskprogress')[0].innerHTML.replace('Status: ', '');
+
+        if (taskStatus == 'Em andamento') {
+            taskUnfinished++;
+        } else if (taskStatus == 'Pendente') {
+            taskNotStarted++;
+        }
+    }
+
+    var taskUnfinishedPercent = (100 * taskUnfinished) / tasksHtmlArray.length;
+    var taskNotStartedPercent = (100 * taskNotStarted) / tasksHtmlArray.length;
+
+    if (barGraphicsDiv.childNodes.length > 0) {
+        while (barGraphicsDiv.childNodes.length > 0) {
+            barGraphicsDiv.removeChild(barGraphicsDiv.firstChild);
+        }
+    }
+
+    createGraphicBar(taskUnfinishedPercent, 'white');
+    createGraphicBar(taskNotStartedPercent, 'red');
+    createGraphicBar(100 - taskNotStartedPercent - taskUnfinishedPercent, 'green');
 }
 
 function constructGraphics() {

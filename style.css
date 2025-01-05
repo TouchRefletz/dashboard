@@ -21,10 +21,22 @@ body {
     flex-direction: column;
 }
 
+#barGraphics {
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
+.graphicBar {
+    width: 40px;
+}
+
 #graphicsDiv {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    width: 50%;
     flex-direction: row-reverse;
 }
 
@@ -58,11 +70,6 @@ body {
     color: white;
     font-family: "Chakra Petch", serif;
     font-size: 20px;
-}
-
-#graphics {
-    width: 400px;
-    height: 200px;
 }
 
 #search {
