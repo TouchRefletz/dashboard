@@ -9,6 +9,19 @@
     display: none;
 }
 
+#graphicsContainer {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#graphics, #graphicsColors {
+    width: 400px;
+    height: 200px;
+}
+
 #search {
     background-color: transparent;
     border: 1px solid white;

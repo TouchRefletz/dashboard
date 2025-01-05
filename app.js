@@ -12,6 +12,8 @@ var filterButton = document.getElementById("filterButton");
 var filterContainer = document.getElementById('filterContainer');
 var chooseFilterButton = document.getElementById("chooseFilterButton");
 var selectFilter = document.getElementById('selectFilter');
+var graphics = document.getElementById('graphics');
+var drawInGraphics = graphics.getContext('2d');
 
 var tasks = ``;
 var tasksArray = [];
@@ -94,6 +96,7 @@ function loadTasks() {
 
     activateEditButtons();
     activateDeleteButtons();
+    constructGraphics();
     
     addTaskButton.addEventListener('click', createTask);
     closeTaskMenuButton.addEventListener('click', closeTaskMenu);
@@ -223,6 +226,60 @@ function closeTaskMenu() {
     addTasksContainer.classList.add("hidden"); /* esconde a div */
 }
 
+function arcCircle(centerX, centerY, radius, startAngle, endAngle, color) {
+    drawInGraphics.fillStyle = color;
+    drawInGraphics.beginPath();
+    drawInGraphics.moveTo(centerX, centerY);
+    drawInGraphics.arc(centerX, centerY, radius, startAngle, endAngle);
+    drawInGraphics.lineTo(centerX, centerY);
+    drawInGraphics.closePath();
+    drawInGraphics.fill();
+}
+
+function constructGraphics() {
+    var radius = 70;
+    var centerX = graphics.width / 2;
+    var centerY = graphics.height / 2;
+    var tasksHtmlArray = document.getElementsByTagName('task');
+
+    var taskUnfinished = 0;
+    var taskNotStarted = 0;
+
+    for (var i = 0; i < tasksHtmlArray.length; i++) {
+        var taskStatus = tasksHtmlArray[i].getElementsByTagName('taskprogress')[0].innerHTML.replace('Status: ', '');
+
+        if (taskStatus == 'Em andamento') {
+            taskUnfinished++;
+        } else if (taskStatus == 'Pendente') {
+            taskNotStarted++;
+        }
+    }
+
+    var taskUnfinishedPercent = (2 * taskUnfinished) / tasksHtmlArray.length;
+    var taskNotStartedPercent = (2 * taskNotStarted) / tasksHtmlArray.length;
+
+    taskUnfinishedPercent = taskUnfinishedPercent * Math.PI;
+    taskNotStartedPercent = taskNotStartedPercent * Math.PI;
+
+    drawInGraphics.clearRect(0, 0, graphics.width, graphics.height);
+
+    arcCircle(centerX, centerY, radius, 0, taskNotStartedPercent, 'red');
+    arcCircle(centerX, centerY, radius, taskNotStartedPercent, taskNotStartedPercent + taskUnfinishedPercent, 'white');
+    arcCircle(centerX, centerY, radius, taskUnfinishedPercent + taskNotStartedPercent,  2 * Math.PI, 'green');
+
+    constructGraphicsColors();
+}
+
+function constructGraphicsColors() {
+    // fazer cores aqui
+}
+
 /* COMEÇO DA EXECUÇÂO DO CODE */
 
 loadTasks();
+
+
+
+
+
+
