@@ -5,19 +5,48 @@
     padding: 0;
 }
 
+body {
+    overflow-x: hidden;
+}
+
 .hidden {
     display: none;
 }
 
 #graphicsContainer {
     width: 100%;
-    height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
-#graphics, #graphicsColors {
+#graphicsContainer > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#graphicsContainer > div > div > div {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+#graphicsContainer > div > div {
+    display: flex;
+    align-items: center;
+    margin: 20px 0px;
+}
+
+#graphicsContainer > div > div > p {
+    color: white;
+    font-family: "Chakra Petch", serif;
+    font-size: 20px;
+}
+
+#graphics {
     width: 400px;
     height: 200px;
 }

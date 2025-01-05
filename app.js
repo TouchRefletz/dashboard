@@ -266,12 +266,6 @@ function constructGraphics() {
     arcCircle(centerX, centerY, radius, 0, taskNotStartedPercent, 'red');
     arcCircle(centerX, centerY, radius, taskNotStartedPercent, taskNotStartedPercent + taskUnfinishedPercent, 'white');
     arcCircle(centerX, centerY, radius, taskUnfinishedPercent + taskNotStartedPercent,  2 * Math.PI, 'green');
-
-    constructGraphicsColors();
-}
-
-function constructGraphicsColors() {
-    // fazer cores aqui
 }
 
 /* COMEÇO DA EXECUÇÂO DO CODE */
