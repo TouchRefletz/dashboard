@@ -8,11 +8,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="containerSearch">
-        <input id="search" type="text" placeholder="Pesquisar tarefa por Título">
-        <button id="searchButton">🔍</button>
-        <button id="filterButton">🔘</button>
-    </div>  
+    <header>
+        <div id="containerSearch">
+            <input id="search" type="text" placeholder="Pesquisar tarefa por Título">
+            <button id="searchButton">🔍</button>
+            <button id="filterButton">🔘</button>
+        </div>  
+    </header>
 
     <div id="filterContainer" class="container hidden"> 
         <div id="addFilter">
@@ -28,8 +30,10 @@
         </div>
     </div>
 
+    <h1 class="title" id="tasksTitle">Tarefas</h1>
     <div class="tasks" id="tasksDiv"></div>
 
+    <h1 class="title" id="graphicsTitle">Gráficos</h1>
     <div id="graphicsContainer">
         <div id="graphicsDiv">
             <select id="selectGraphics">

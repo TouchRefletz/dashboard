@@ -13,6 +13,28 @@ body {
     display: none;
 }
 
+#tasksTitle {
+    margin-top: 200px;
+}
+
+#graphicsTitle {
+    margin: 200px 0px 100px 0px; /* topo | direita | inferior | esquerda */
+}
+
+.title {
+    color: white;
+    font-family: "Chakra Petch", serif;
+    text-align: center;
+    font-size: 50px;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    background-color: black;
+    box-shadow: 0px 5px 5px white; /* distância x | distância y | blur | cor */
+}
+
 #graphicsContainer {
     width: 100%;
     display: flex;
