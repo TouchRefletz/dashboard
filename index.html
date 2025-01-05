@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="containerSearch">
-        <input id="search" type="text" placeholder="Pesquisar tarefa">
+        <input id="search" type="text" placeholder="Pesquisar tarefa por Título">
         <button id="searchButton">🔍</button>
         <button id="filterButton">🔘</button>
     </div>  
@@ -18,11 +18,11 @@
         <div id="addFilter">
             <label for="selectFilter">Selecione um filtro para a pesquisa</label>
             <select id="selectFilter">
-                <option>Título</option>
-                <option>Descrição</option>
-                <option>Prazo</option>
-                <option>Prioridade</option>
-                <option>Status</option>
+                <option value="tasktitle">Título</option>
+                <option value="taskdescription">Descrição</option>
+                <option value="taskdate">Prazo</option>
+                <option value="taskpriority">Prioridade</option>
+                <option value="taskprogress">Status</option>
             </select>
             <button class="button" id="chooseFilterButton">Selecionar filtro</button>
         </div>

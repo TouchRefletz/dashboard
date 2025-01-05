@@ -10,6 +10,8 @@ var searchButton = document.getElementById('searchButton');
 var searchInput = document.getElementById('search');
 var filterButton = document.getElementById("filterButton");
 var filterContainer = document.getElementById('filterContainer');
+var chooseFilterButton = document.getElementById("chooseFilterButton");
+var selectFilter = document.getElementById('selectFilter');
 
 var tasks = ``;
 var tasksArray = [];
@@ -52,7 +54,7 @@ function search() {
     var array = document.getElementsByTagName('tasks')[0].getElementsByTagName('task');
     var searchText = searchInput.value.toLowerCase();
     for (var i = 0; i < array.length; i++) {
-        var titleText = array[i].getElementsByTagName('tasktitle')[0].innerHTML.toLowerCase();
+        var titleText = array[i].getElementsByTagName(selectFilter.value)[0].innerHTML.toLowerCase();
 
         if (!titleText.includes(searchText)) {
             document.getElementsByTagName('tasks')[0].removeChild(array[i]);
@@ -97,7 +99,14 @@ function loadTasks() {
     closeTaskMenuButton.addEventListener('click', closeTaskMenu);
     searchButton.addEventListener('click', search);
     filterButton.addEventListener('click', filter);
+    chooseFilterButton.addEventListener('click', closeFilterMenu);
     searchInput.addEventListener('input', activateSearch);
+}
+
+function closeFilterMenu() {
+    filterContainer.classList.add('hidden');
+    filterContainer.style.display = '';
+    searchInput.placeholder = `Pesquisar tarefa por ${selectFilter.selectedOptions[0].innerHTML}`;
 }
 
 function filter() {
