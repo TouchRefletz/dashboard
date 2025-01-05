@@ -8,6 +8,8 @@ var addTaskButton = document.getElementById('addTaskButton');
 var closeTaskMenuButton = document.getElementById("closeTaskMenuButton");
 var searchButton = document.getElementById('searchButton');
 var searchInput = document.getElementById('search');
+var filterButton = document.getElementById("filterButton");
+var filterContainer = document.getElementById('filterContainer');
 
 var tasks = ``;
 var tasksArray = [];
@@ -33,10 +35,20 @@ function verifyAddTaskButton() {
         document.getElementsByTagName('tasks')[0].removeChild(showAddTaskMenuButton);
     }
 
-    document.getElementsByTagName('tasks')[0].innerHTML += `<addTask id="showAddTaskMenuButton">+</addTask>`;
+    var tasksDivXML = document.getElementsByTagName('tasks');
+
+    if (tasksDivXML.length == 0) {
+        var tasksNewDiv = document.createElement('tasks');
+        tasksDiv.appendChild(tasksNewDiv);
+    }
+
+    tasksDivXML = document.getElementsByTagName('tasks');
+
+    tasksDivXML[0].innerHTML += `<addTask id="showAddTaskMenuButton">+</addTask>`;
 }
 
 function search() {
+    loadTasks();
     var array = document.getElementsByTagName('tasks')[0].getElementsByTagName('task');
     var searchText = searchInput.value.toLowerCase();
     for (var i = 0; i < array.length; i++) {
@@ -84,7 +96,13 @@ function loadTasks() {
     addTaskButton.addEventListener('click', createTask);
     closeTaskMenuButton.addEventListener('click', closeTaskMenu);
     searchButton.addEventListener('click', search);
+    filterButton.addEventListener('click', filter);
     searchInput.addEventListener('input', activateSearch);
+}
+
+function filter() {
+    filterContainer.classList.remove('hidden');
+    filterContainer.style.display = 'flex';
 }
 
 function activateEditButtons() {

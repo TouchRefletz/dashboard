@@ -35,7 +35,19 @@
     right: 11%;
 }
 
-#searchButton:hover {
+#filterButton {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    border-radius: 5px;
+    font-family: "Chakra Petch", serif;
+    transition: all .1s ease-in-out;
+    position: absolute;
+    right: 16%;
+}
+
+#searchButton:hover, #filterButton:hover {
     transform: scale(1.2);
     cursor: pointer;
 }
@@ -162,6 +174,32 @@ body {
     
     align-items: center;
     justify-content: center;
+}
+
+.container > #addFilter {
+    color: white;
+    font-family: "Chakra Petch", serif;
+    width: 50vw;
+    height: 50vh;
+    padding: 100px;
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    justify-content: center;
+    border-radius: 25px;
+    border: 1px solid white;
+    box-shadow: 10px 5px 5px white; /* distância x | distância y | blur | cor */
+}
+
+.container > #addFilter > select {
+    color: white;
+    font-family: "Chakra Petch", serif;
+    background-color: black;
+    border-radius: 5px;
+}
+
+.container > #addFilter > label {
+    margin: 20px 0px 5px 0px; /* topo | direita | inferior | esquerda */
 }
 
 .container > #addTasks {

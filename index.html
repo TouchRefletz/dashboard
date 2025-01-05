@@ -11,7 +11,22 @@
     <div id="containerSearch">
         <input id="search" type="text" placeholder="Pesquisar tarefa">
         <button id="searchButton">🔍</button>
+        <button id="filterButton">🔘</button>
     </div>  
+
+    <div id="filterContainer" class="container hidden"> 
+        <div id="addFilter">
+            <label for="selectFilter">Selecione um filtro para a pesquisa</label>
+            <select id="selectFilter">
+                <option>Título</option>
+                <option>Descrição</option>
+                <option>Prazo</option>
+                <option>Prioridade</option>
+                <option>Status</option>
+            </select>
+            <button class="button" id="chooseFilterButton">Selecionar filtro</button>
+        </div>
+    </div>
 
     <div class="tasks" id="tasksDiv"></div>
 
