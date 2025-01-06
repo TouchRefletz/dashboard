@@ -208,7 +208,7 @@ menu {
     height: 100px;
 }
 
-tasks {
+#tasks {
     color: white;
     font-family: "Chakra Petch", serif;
     transition: all .3s ease-in-out;
@@ -216,12 +216,12 @@ tasks {
     flex-wrap: wrap;
 }
 
-#taskButtonsDiv {
+.taskButtonsDiv {
     display: flex;
     align-items: center;
 }
 
-#taskButtonsDiv > button {
+.taskButtonsDiv > button {
     padding: 10px;
     margin: 10px;
     background-color: transparent;
@@ -238,18 +238,18 @@ tasks {
     height: 50px;
 }
 
-#taskButtonsDiv > button:hover {
+.taskButtonsDiv > button:hover {
     background-color: white;
     transform: scale(1.1);
     color: black;
     cursor: pointer;
 }
 
-#taskButtonsDiv > button:hover > img {
+.taskButtonsDiv > button:hover > img {
     filter: invert(1);
 }
 
-#taskButtonsDiv > button > img {
+.taskButtonsDiv > button > img {
     width: 30px;
 }
 
@@ -283,34 +283,34 @@ tasks {
     cursor: pointer;
 }
 
-#taskAllInformationsDiv {
+.taskAllInformationsDiv {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-#taskInformationDiv {
+.taskInformationDiv {
     display: flex;
     flex-direction: column;
 }
 
-#taskNameDiv {
+.taskNameDiv {
     display: flex;
     flex-direction: column;
     align-items: start;
     width: 125px;
 }
 
-taskTitle {
+.taskTitle {
     font-size: 30px;
 }
 
-taskDescription {
+.taskDescription {
     margin-left: 2px;
     margin-bottom: 10px; 
 }
 
-taskDate, taskPriority, taskProgress {
+.taskDate, .taskPriority, .taskProgress {
     border-radius: 20px;
     padding: 10px;
     font-size: 15px;
@@ -322,7 +322,7 @@ taskDate, taskPriority, taskProgress {
     margin: 5px 0px;
 }
 
-tasks {
+#tasks {
     font-family: "Chakra Petch", serif;
     color: white;
     margin: 10%;
@@ -331,7 +331,7 @@ tasks {
     justify-content: center;
 }
 
-task {
+.task {
     border: 1px solid white;
     margin: 20px;
     border-radius: 10px;

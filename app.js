@@ -26,6 +26,8 @@ var tasks = ``;
 var tasksArray = [];
 var editTaskBoolean = false;
 var taskIdFromButton = '';
+var tasksXML = '';
+var tasksId = [];
 
 /* FUNÇÔES */
 
@@ -38,24 +40,6 @@ function saveTasks() {
     tasks += `</tasks>`
     localStorage.setItem('tasks',tasks.toString())
     loadTasks();
-}
-
-function verifyAddTaskButton() {
-    var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
-    if (showAddTaskMenuButton != null) {
-        document.getElementsByTagName('tasks')[0].removeChild(showAddTaskMenuButton);
-    }
-
-    var tasksDivXML = document.getElementsByTagName('tasks');
-
-    if (tasksDivXML.length == 0) {
-        var tasksNewDiv = document.createElement('tasks');
-        tasksDiv.appendChild(tasksNewDiv);
-    }
-
-    tasksDivXML = document.getElementsByTagName('tasks');
-
-    tasksDivXML[0].innerHTML += `<addTask id="showAddTaskMenuButton">+</addTask>`;
 }
 
 function search() {
@@ -79,30 +63,28 @@ function activateSearch() {
     }
 }
 
+function syncTasks() {
+    tasks = localStorage.getItem('tasks');
+    if (tasks != null) {
+        const parser = new DOMParser(); // Transformador de XML
+        const xmlDoc = parser.parseFromString(tasks, "text/xml");
+        tasksXML = xmlDoc.documentElement;
+
+        const tasksElements = tasksXML.querySelectorAll('task');
+        const taskArray = Array.from(tasksElements).map(task => task.outerHTML);
+        tasksId = Array.from(tasksElements).map(task => Number(task.id));
+        tasksArray = taskArray;
+    }
+}
+
 function loadTasks() {
     if (editTaskBoolean) {
         addTaskButton.removeEventListener('click', callEditButton);
         addTaskButton.addEventListener('click', createTask);
     }
 
-    const parser = new DOMParser(); // Transformador de XML
-    tasks = localStorage.getItem('tasks');
-    
-    if (tasks != null) {
-        tasksDiv.innerHTML = '';
-        const xmlDoc = parser.parseFromString(tasks, "text/xml"); // Transformando XML em objeto
-        tasksDiv.appendChild(xmlDoc.documentElement);
+    syncTasks();
 
-        const tasksElements = document.querySelectorAll('task');
-        const taskArray = Array.from(tasksElements).map(task => task.outerHTML);
-        tasksArray = taskArray;
-    }
-    verifyAddTaskButton();
-    var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
-    showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu);
-
-    activateEditButtons();
-    activateDeleteButtons();
     constructGraphics();
     
     addTaskButton.addEventListener('click', createTask);
@@ -111,53 +93,118 @@ function loadTasks() {
     filterButton.addEventListener('click', filter);
     chooseFilterButton.addEventListener('click', closeFilterMenu);
     searchInput.addEventListener('input', activateSearch);
+
     if (selectGraphics) {
         selectGraphics.addEventListener('change', constructGraphics)
     }
+
     changeSearchButton.addEventListener('click', changeSearch);
 
     structureTasksInHtml();
+    activateEditButtons();
+    activateDeleteButtons();
+
+    var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
+    showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu);
 }
 
 function structureTasksInHtml() {
-    var taskList = tasksDiv.childNodes[0].getElementsByTagName('task');
-    for (var i = 0; i < taskList.length; i++) {
-        var taskTitle = taskList[i].getElementsByTagName("tasktitle")[0];
-        var taskDescription = taskList[i].getElementsByTagName("taskdescription")[0];
-        var taskDate = taskList[i].getElementsByTagName("taskdate")[0];
-        var taskProgress = taskList[i].getElementsByTagName("taskprogress")[0];
-        var taskPriority = taskList[i].getElementsByTagName("taskpriority")[0];
-        var buttons = taskList[i].getElementsByTagName("button");
+    var tasks = tasksXML.getElementsByTagName('task');
+    var tasksMainDiv = tasksXML.getElementsByTagName('tasks');
 
-        var taskId = taskList[i].id;
-        var taskInHtml = document.getElementById(taskId);
+    tasksDiv.innerHTML = '';
 
-        var div3 = document.createElement('div');
-        if (buttons.length > 0) {
-            while (buttons.length > 0) {
-                div3.appendChild(buttons[0]);
+    if (tasksMainDiv == undefined) {
+        return;
+    } else {
+        var finalResult = document.createElement('div');
+        finalResult.id = 'tasks';
+
+        if (tasks.length > 0) {
+            for (var i = 0; i < tasks.length; i++) {
+                var taskDiv = document.createElement('div');
+                taskDiv.id = tasks[i].id;
+                taskDiv.classList.add('task');
+
+                var taskTitle = tasks[i].getElementsByTagName("taskTitle")[0];
+                var taskDescription = tasks[i].getElementsByTagName("taskDescription")[0];
+                var taskDate = tasks[i].getElementsByTagName("taskDate")[0];
+                var taskProgress = tasks[i].getElementsByTagName("taskProgress")[0];
+                var taskPriority = tasks[i].getElementsByTagName("taskPriority")[0];
+                var buttons = tasks[i].getElementsByTagName("button");
+
+                var AllTaskInfo = document.createElement('div');
+                AllTaskInfo.classList.add('taskAllInformationsDiv');
+
+                var titleDiv = document.createElement('div');
+                titleDiv.classList.add('taskNameDiv');
+                if (taskTitle != undefined) {
+                    var e = document.createElement('h1');
+                    e.classList.add('taskTitle');
+                    e.innerHTML = taskTitle.innerHTML;
+                    titleDiv.appendChild(e);
+                }
+                if (taskDescription != undefined) {
+                    var e = document.createElement('p');
+                    e.classList.add('taskDescription');
+                    e.innerHTML = taskDescription.innerHTML;
+                    titleDiv.appendChild(e);
+                }
+                AllTaskInfo.appendChild(titleDiv);
+
+                var taskInformationDiv = document.createElement('div');
+                taskInformationDiv.classList.add('taskInformationDiv');
+                if (taskDate != undefined) {
+                    var e = document.createElement('p');
+                    e.classList.add('taskDate');
+                    e.innerHTML = taskDate.innerHTML;
+                    taskInformationDiv.appendChild(e);
+                }
+                if (taskProgress != undefined) {
+                    var e = document.createElement('p');
+                    e.classList.add('taskProgress');
+                    e.innerHTML = taskProgress.innerHTML;
+                    taskInformationDiv.appendChild(e);
+                }
+                if (taskPriority != undefined) {
+                    var e = document.createElement('p');
+                    e.classList.add('taskPriority');
+                    e.innerHTML = taskPriority.innerHTML;
+                    taskInformationDiv.appendChild(e);
+                }
+                AllTaskInfo.appendChild(taskInformationDiv);
+
+                taskDiv.appendChild(AllTaskInfo);
+
+                var buttonsDiv = document.createElement('div');
+                buttonsDiv.classList.add('taskButtonsDiv');
+                buttonsDiv.innerHTML = `
+                <button id="${tasks[i].id}_edit" class="editTask">
+                <!-- fonte: https://www.flaticon.com/br/icones-gratis/editar -->
+                <img src="imgs/edit.png" alt="Ícone de editar"></button>
+
+                <button id="${tasks[i].id}_delete" class="deleteTask">
+                <!-- fonte: https://www.flaticon.com/br/icones-gratis/excluir -->
+                <img src="imgs/delete.png" alt="Ícone de deletar"></button>`;
+                taskDiv.appendChild(buttonsDiv);
+
+                finalResult.appendChild(taskDiv);
             }
         }
-        div3.id = 'taskButtonsDiv';
-        taskInHtml.appendChild(div3);
 
-        var div2 = document.createElement('div');
-        div2.appendChild(taskDate);
-        div2.appendChild(taskProgress);
-        div2.appendChild(taskPriority);
-        div2.id = 'taskInformationDiv';
-        
-        var div1 = document.createElement('div');
-        div1.appendChild(taskTitle);
-        div1.appendChild(taskDescription);
-        div1.id = 'taskNameDiv';
+        finalResult.innerHTML += `<addTask id="showAddTaskMenuButton">+</addTask>`;
 
-        var div4 = document.createElement('div');
-        div4.appendChild(div1);
-        div4.appendChild(div2);
-        div4.id = 'taskAllInformationsDiv';
-        taskInHtml.insertBefore(div4, taskInHtml.firstChild);
+        tasksDiv.appendChild(finalResult);
     }
+}
+
+function addButtons(buttons) {
+    var bDiv = document.createElement('div');
+    for (let index = 0; index < buttons.length; index++) {
+        const element = buttons[index];
+        bDiv.appendChild(element);
+    }
+    return bDiv;
 }
 
 function changeSearch() {
@@ -198,19 +245,15 @@ function activateDeleteButtons() {
 }
 
 function addEditTaskEventListener(button) {
-    button.innerHTML = `
-    <!-- fonte: https://www.flaticon.com/br/icones-gratis/editar -->
-    <img src="imgs/edit.png" alt="Ícone de editar">
-    `;
     button.addEventListener('click', () => {
-        var taskFromButton = button.parentElement;
-        taskIdFromButton = button.parentElement.id;
+        var taskFromButton = button.parentElement.parentElement;
+        taskIdFromButton = button.parentElement.parentElement.id;
         openTaskManagerMenu();
 
         addTaskButton.removeEventListener('click', createTask);
         addTaskButton.addEventListener('click', callEditButton);
 
-        tasksDiv.childNodes[0].removeChild(taskFromButton);
+        document.getElementById('tasks').removeChild(taskFromButton);
         
         for (var i = 0; i < tasksArray.length; i++) {
             if (tasksArray[i].includes(taskIdFromButton)) {
@@ -221,15 +264,11 @@ function addEditTaskEventListener(button) {
 }
 
 function addDeleteTaskEventListener(button) {
-    button.innerHTML = `
-    <!-- fonte: https://www.flaticon.com/br/icones-gratis/excluir -->
-    <img src="imgs/delete.png" alt="Ícone de editar">
-    `;
     button.addEventListener('click', () => {
         var taskFromButton = button.parentElement.parentElement;
         taskIdFromButton = button.parentElement.parentElement.id;
 
-        tasksDiv.childNodes[0].removeChild(taskFromButton);
+        document.getElementById('tasks').removeChild(taskFromButton);
         
         for (var i = 0; i < tasksArray.length; i++) {
             if (tasksArray[i].includes(taskIdFromButton)) {
@@ -281,21 +320,16 @@ function createTask() {
         <taskDate>${time}</taskDate>
         <taskPriority>${taskPriority.value}</taskPriority>
         <taskProgress>${taskProgress.value}</taskProgress>
-        <button id="${taskIdFromButton}" class="editTask">Editar</button>
-        <button id="${taskIdFromButton}" class="deleteTask">Excluir</button>
     </task>
     `
 
     tasksArray.push(task);
+    closeTaskMenu();
     saveTasks();
     taskIdFromButton = '';
-    closeTaskMenu();
 }
 
 function closeTaskMenu() {
-    if (taskIdFromButton != '') {
-        loadTasks();
-    }
     addTasksContainer.style.display = 'none';
     addTasksContainer.classList.add("hidden"); /* esconde a div */
 }
@@ -399,8 +433,14 @@ function constructGraphics() {
 
 /* COMEÇO DA EXECUÇÂO DO CODE */
 
+syncTasks();
+
 if (tasksDiv) {
     loadTasks();
+}
+
+if (window.location.pathname == '/graphics.html') {
+    constructGraphics();
 }
 
 
