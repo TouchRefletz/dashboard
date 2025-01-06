@@ -33,6 +33,69 @@ header {
     top: 0;
     background-color: black;
     box-shadow: 0px 5px 5px white; /* distância x | distância y | blur | cor */
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+}
+
+menu {
+    display: flex;
+    margin: 0px 20px;
+}
+
+.headerButton {
+    padding: 10px;
+    margin: 10px;
+    margin-left: 0px;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    border-radius: 5px;
+    font-family: "Chakra Petch", serif;
+    transition: all .3s ease-in-out;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.headerButton:hover {
+    background-color: white;
+    transform: scale(1.1);
+    color: black;
+    cursor: pointer;
+}
+
+.headerButton:hover > img {
+    filter: invert(1);
+}
+
+.headerButton > img {
+    width: 30px;
+}
+
+#headerContent {
+    width: 90vw;
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    justify-content: space-between;
+}
+
+#headerContent > div {
+    display: flex;
+    align-items: center;
+}
+
+#headerContent > div > h1 {
+    color: white;
+    font-family: "Chakra Petch", serif;
+}
+
+#headerContent > div > a > img {
+    width: 50px;
+    margin: 0px 10px 0px 20px; /* topo | direita | inferior | esquerda */
 }
 
 #graphicsContainer {
@@ -76,7 +139,7 @@ header {
     flex-direction: column;
 }
 
-#graphicsColorsDiv > div > div{
+#graphicsColorsDiv > div > div {
     width: 20px;
     height: 20px;
     margin-right: 10px;
@@ -101,9 +164,8 @@ header {
     outline: none;
     color: white;
     font-family: "Chakra Petch", serif;
-    padding-left: 5px;
     font-size: 20px;
-    width: 80%;
+    width: 100%;
     padding-left: 20px;
     height: 50%;
 }
@@ -138,12 +200,12 @@ header {
 }
 
 #containerSearch {
-    width: 100vw;
-    display: flex;
+    width: 800px;
+    margin: 0px 20px;
+    /* display: flex; */
     align-items: center;
     justify-content: center;
-    height: 10vh;
-    margin-right: 0px;
+    height: 100px;
 }
 
 tasks {

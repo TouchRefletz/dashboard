@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskManager - Tarefas</title>
+    <title>TaskManager - Gráficos</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -52,38 +52,36 @@
         </div>
     </div>
 
-    <h1 class="title" id="tasksTitle">Tarefas</h1>
-    <div class="tasks" id="tasksDiv"></div>
-
-    <div id="addTasksContainer" class="container hidden">
-        <div id="addTasks">
-            <label for="taskTitle">Título da tarefa</label>
-            <input type="text" id="taskTitle">
-
-            <label for="taskDescription">Descrição da tarefa</label>
-            <input type="text" id="taskDescription">
-
-            <label for="taskDate">Prazo da tarefa</label>
-            <input type="datetime-local" id="taskDate">
-
-            <label for="taskPriority">Prioridade da tarefa</label>
-            <select name="option" id="taskPriority">
-                <option>Baixa</option>
-                <option>Normal</option>
-                <option>Alta</option>
-                <option>Urgente</option>
+    <h1 class="title" id="graphicsTitle">Gráficos</h1>
+    <div id="graphicsContainer">
+        <div id="graphicsDiv">
+            <select id="selectGraphics">
+                <option>Gráfico de Pizza</option>
+                <option>Gráfico de Barra</option>
             </select>
+    
+            <div>
+                <canvas id="graphics" width="250" height="250"></canvas>
 
-            <label for="taskProgress">Progressso da tarefa</label>
-            <select name="option" id="taskProgress">
-                <option>Pendente</option>
-                <option>Em andamento</option>
-                <option>Concluída</option>
-            </select>
+                <div id="barGraphics"></div>
 
-            <button class="button" id="addTaskButton">Adicionar tarefa</button>
-
-            <button class="button" id="closeTaskMenuButton">Cancelar</button>
+                <div id="graphicsColorsDiv">
+                    <div>
+                        <div style="background-color: red;"></div>
+                        <p>Tarefas Pendentes</p>
+                    </div>
+                    
+                    <div>
+                        <div style="background-color: white;"></div>
+                        <p>Tarefas Em Andamento</p>
+                    </div>
+                    
+                    <div>
+                        <div style="background-color: green;"></div>
+                        <p>Tarefas Concluídas</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="app.js"></script>

@@ -13,9 +13,14 @@ var filterContainer = document.getElementById('filterContainer');
 var chooseFilterButton = document.getElementById("chooseFilterButton");
 var selectFilter = document.getElementById('selectFilter');
 var graphics = document.getElementById('graphics');
-var drawInGraphics = graphics.getContext('2d');
+if (graphics) {
+    var drawInGraphics = graphics.getContext('2d');
+}
 var selectGraphics = document.getElementById('selectGraphics');
 var barGraphicsDiv = document.getElementById('barGraphics');
+var changeSearchButton = document.getElementById('changeSearch');
+var searchContainer = document.getElementById('containerSearch');
+var tasksTitle = document.getElementById('tasksTitle');
 
 var tasks = ``;
 var tasksArray = [];
@@ -106,7 +111,22 @@ function loadTasks() {
     filterButton.addEventListener('click', filter);
     chooseFilterButton.addEventListener('click', closeFilterMenu);
     searchInput.addEventListener('input', activateSearch);
-    selectGraphics.addEventListener('change', constructGraphics)
+    if (selectGraphics) {
+        selectGraphics.addEventListener('change', constructGraphics)
+    }
+    changeSearchButton.addEventListener('click', changeSearch);
+}
+
+function changeSearch() {
+    if (searchContainer.classList.contains('hidden')) {
+        searchContainer.classList.remove('hidden');
+        searchContainer.style.display = 'flex';
+        tasksTitle.style.marginTop = '300px';
+    } else {
+        searchContainer.classList.add('hidden');
+        searchContainer.style.display = '';
+        tasksTitle.style.marginTop = '';
+    }
 }
 
 function closeFilterMenu() {
@@ -317,16 +337,21 @@ function constructBarGraphics() {
 }
 
 function constructGraphics() {
-    if (selectGraphics.value == "Gráfico de Pizza") {
-        constructPizzaGraphics();
-    } else {
-        constructBarGraphics();
+    if (selectGraphics) {
+        if (selectGraphics.value == "Gráfico de Pizza") {
+            constructPizzaGraphics();
+        } else {
+            constructBarGraphics();
+        }
     }
 }
 
 /* COMEÇO DA EXECUÇÂO DO CODE */
 
-loadTasks();
+if (tasksDiv) {
+    loadTasks();
+}
+
 
 
 
