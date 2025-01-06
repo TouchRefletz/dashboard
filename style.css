@@ -216,24 +216,41 @@ tasks {
     flex-wrap: wrap;
 }
 
-task > button {
+#taskButtonsDiv {
+    display: flex;
+    align-items: center;
+}
+
+#taskButtonsDiv > button {
     padding: 10px;
     margin: 10px;
-    margin-left: 0px;
-    align-items: center;
     background-color: transparent;
     border: 1px solid white;
     color: white;
     border-radius: 5px;
     font-family: "Chakra Petch", serif;
     transition: all .3s ease-in-out;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
 }
 
-task > button:hover {
+#taskButtonsDiv > button:hover {
     background-color: white;
-    transform: scale(1.05);
+    transform: scale(1.1);
     color: black;
     cursor: pointer;
+}
+
+#taskButtonsDiv > button:hover > img {
+    filter: invert(1);
+}
+
+#taskButtonsDiv > button > img {
+    width: 30px;
 }
 
 #showAddTaskMenuButton > p {
@@ -246,10 +263,13 @@ task > button:hover {
 
 #showAddTaskMenuButton {
     display: flex;
+    margin: 20px;
+    padding: 10px;
     align-items: center;
     justify-content: center;
-    width: 150px;
-    height: 150px;
+    width: 300px;
+    height: 300px;
+    font-size: 50px;
     color: white;
     border-radius: 20px;
     border: 1px solid white;
@@ -263,6 +283,24 @@ task > button:hover {
     cursor: pointer;
 }
 
+#taskAllInformationsDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#taskInformationDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+#taskNameDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 125px;
+}
+
 taskTitle {
     font-size: 30px;
 }
@@ -270,6 +308,18 @@ taskTitle {
 taskDescription {
     margin-left: 2px;
     margin-bottom: 10px; 
+}
+
+taskDate, taskPriority, taskProgress {
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 15px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid white;
+    margin: 5px 0px;
 }
 
 tasks {
@@ -288,6 +338,8 @@ task {
     padding: 10px;
     display: flex;
     flex-direction: column;
+    width: 300px;
+    height: 300px;
 }
 
 body {
@@ -313,12 +365,12 @@ body {
 }
 
 .container {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    
+    /* display: flex; */
     align-items: center;
     justify-content: center;
 }

@@ -115,6 +115,49 @@ function loadTasks() {
         selectGraphics.addEventListener('change', constructGraphics)
     }
     changeSearchButton.addEventListener('click', changeSearch);
+
+    structureTasksInHtml();
+}
+
+function structureTasksInHtml() {
+    var taskList = tasksDiv.childNodes[0].getElementsByTagName('task');
+    for (var i = 0; i < taskList.length; i++) {
+        var taskTitle = taskList[i].getElementsByTagName("tasktitle")[0];
+        var taskDescription = taskList[i].getElementsByTagName("taskdescription")[0];
+        var taskDate = taskList[i].getElementsByTagName("taskdate")[0];
+        var taskProgress = taskList[i].getElementsByTagName("taskprogress")[0];
+        var taskPriority = taskList[i].getElementsByTagName("taskpriority")[0];
+        var buttons = taskList[i].getElementsByTagName("button");
+
+        var taskId = taskList[i].id;
+        var taskInHtml = document.getElementById(taskId);
+
+        var div3 = document.createElement('div');
+        if (buttons.length > 0) {
+            while (buttons.length > 0) {
+                div3.appendChild(buttons[0]);
+            }
+        }
+        div3.id = 'taskButtonsDiv';
+        taskInHtml.appendChild(div3);
+
+        var div2 = document.createElement('div');
+        div2.appendChild(taskDate);
+        div2.appendChild(taskProgress);
+        div2.appendChild(taskPriority);
+        div2.id = 'taskInformationDiv';
+        
+        var div1 = document.createElement('div');
+        div1.appendChild(taskTitle);
+        div1.appendChild(taskDescription);
+        div1.id = 'taskNameDiv';
+
+        var div4 = document.createElement('div');
+        div4.appendChild(div1);
+        div4.appendChild(div2);
+        div4.id = 'taskAllInformationsDiv';
+        taskInHtml.insertBefore(div4, taskInHtml.firstChild);
+    }
 }
 
 function changeSearch() {
@@ -155,6 +198,10 @@ function activateDeleteButtons() {
 }
 
 function addEditTaskEventListener(button) {
+    button.innerHTML = `
+    <!-- fonte: https://www.flaticon.com/br/icones-gratis/editar -->
+    <img src="imgs/edit.png" alt="Ícone de editar">
+    `;
     button.addEventListener('click', () => {
         var taskFromButton = button.parentElement;
         taskIdFromButton = button.parentElement.id;
@@ -174,9 +221,13 @@ function addEditTaskEventListener(button) {
 }
 
 function addDeleteTaskEventListener(button) {
+    button.innerHTML = `
+    <!-- fonte: https://www.flaticon.com/br/icones-gratis/excluir -->
+    <img src="imgs/delete.png" alt="Ícone de editar">
+    `;
     button.addEventListener('click', () => {
-        var taskFromButton = button.parentElement;
-        taskIdFromButton = button.parentElement.id;
+        var taskFromButton = button.parentElement.parentElement;
+        taskIdFromButton = button.parentElement.parentElement.id;
 
         tasksDiv.childNodes[0].removeChild(taskFromButton);
         
@@ -227,9 +278,9 @@ function createTask() {
     <task id="${taskIdFromButton}">
         <taskTitle>${taskTitle.value}</taskTitle>
         <taskDescription>${taskDescription.value}</taskDescription>
-        <taskDate>Para: ${time}</taskDate>
-        <taskPriority>Prioridade: ${taskPriority.value}</taskPriority>
-        <taskProgress>Status: ${taskProgress.value}</taskProgress>
+        <taskDate>${time}</taskDate>
+        <taskPriority>${taskPriority.value}</taskPriority>
+        <taskProgress>${taskProgress.value}</taskProgress>
         <button id="${taskIdFromButton}" class="editTask">Editar</button>
         <button id="${taskIdFromButton}" class="deleteTask">Excluir</button>
     </task>
