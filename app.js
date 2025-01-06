@@ -84,8 +84,6 @@ function loadTasks() {
     }
 
     syncTasks();
-
-    constructGraphics();
     
     addTaskButton.addEventListener('click', createTask);
     closeTaskMenuButton.addEventListener('click', closeTaskMenu);
@@ -93,10 +91,6 @@ function loadTasks() {
     filterButton.addEventListener('click', filter);
     chooseFilterButton.addEventListener('click', closeFilterMenu);
     searchInput.addEventListener('input', activateSearch);
-
-    if (selectGraphics) {
-        selectGraphics.addEventListener('change', constructGraphics)
-    }
 
     changeSearchButton.addEventListener('click', changeSearch);
 
@@ -351,13 +345,15 @@ function constructPizzaGraphics() {
     var radius = 100;
     var centerX = graphics.width / 2;
     var centerY = graphics.height / 2;
-    var tasksHtmlArray = document.getElementsByTagName('task');
 
     var taskUnfinished = 0;
     var taskNotStarted = 0;
 
-    for (var i = 0; i < tasksHtmlArray.length; i++) {
-        var taskStatus = tasksHtmlArray[i].getElementsByTagName('taskprogress')[0].innerHTML.replace('Status: ', '');
+    for (var i = 0; i < tasksArray.length; i++) {
+        const regex = /<taskProgress>(.*?)<\/taskProgress>/; // Captura o conteúdo dentro de <taskProgress>
+        const match = tasksArray[i].match(regex); // Verifica se há uma correspondência
+        
+        var taskStatus = match[1];
 
         if (taskStatus == 'Em andamento') {
             taskUnfinished++;
@@ -366,8 +362,8 @@ function constructPizzaGraphics() {
         }
     }
 
-    var taskUnfinishedPercent = (2 * taskUnfinished) / tasksHtmlArray.length;
-    var taskNotStartedPercent = (2 * taskNotStarted) / tasksHtmlArray.length;
+    var taskUnfinishedPercent = (2 * taskUnfinished) / tasksArray.length;
+    var taskNotStartedPercent = (2 * taskNotStarted) / tasksArray.length;
 
     taskUnfinishedPercent = taskUnfinishedPercent * Math.PI;
     taskNotStartedPercent = taskNotStartedPercent * Math.PI;
@@ -392,13 +388,14 @@ function constructBarGraphics() {
     graphics.style.display = 'none';
     barGraphicsDiv.style.display = 'flex';
 
-    var tasksHtmlArray = document.getElementsByTagName('task');
-
     var taskUnfinished = 0;
     var taskNotStarted = 0;
 
-    for (var i = 0; i < tasksHtmlArray.length; i++) {
-        var taskStatus = tasksHtmlArray[i].getElementsByTagName('taskprogress')[0].innerHTML.replace('Status: ', '');
+    for (var i = 0; i < tasksArray.length; i++) {
+        const regex = /<taskProgress>(.*?)<\/taskProgress>/; // Captura o conteúdo dentro de <taskProgress>
+        const match = tasksArray[i].match(regex); // Verifica se há uma correspondência
+
+        var taskStatus = match[1];
 
         if (taskStatus == 'Em andamento') {
             taskUnfinished++;
@@ -407,8 +404,8 @@ function constructBarGraphics() {
         }
     }
 
-    var taskUnfinishedPercent = (100 * taskUnfinished) / tasksHtmlArray.length;
-    var taskNotStartedPercent = (100 * taskNotStarted) / tasksHtmlArray.length;
+    var taskUnfinishedPercent = (100 * taskUnfinished) / tasksArray.length;
+    var taskNotStartedPercent = (100 * taskNotStarted) / tasksArray.length;
 
     if (barGraphicsDiv.childNodes.length > 0) {
         while (barGraphicsDiv.childNodes.length > 0) {
@@ -440,6 +437,8 @@ if (tasksDiv) {
 }
 
 if (window.location.pathname == '/graphics.html') {
+    constructGraphics();
+    selectGraphics.addEventListener('change', constructGraphics)
     constructGraphics();
 }
 
