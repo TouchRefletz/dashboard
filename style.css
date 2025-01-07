@@ -451,7 +451,6 @@ menu {
     display: flex;
     flex-direction: column;
     width: 300px;
-    animation: popupOpen .3s ease-in-out;
     transition: all .3s ease-in-out;
 }
 

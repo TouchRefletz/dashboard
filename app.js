@@ -29,6 +29,8 @@ var taskIdFromButton = '';
 var tasksXML = '';
 var tasksId = [];
 
+var searching = false;
+
 /* FUNÇÔES */
 
 function saveTasks() {
@@ -43,16 +45,18 @@ function saveTasks() {
 }
 
 function search() {
+    searching = true;
     loadTasks();
-    var array = document.getElementsByTagName('tasks')[0].getElementsByTagName('task');
+    var array = document.getElementById('tasks').getElementsByClassName('task');
     var searchText = searchInput.value.toLowerCase();
     for (var i = 0; i < array.length; i++) {
-        var titleText = array[i].getElementsByTagName(selectFilter.value)[0].innerHTML.toLowerCase();
+        var titleText = array[i].getElementsByClassName(selectFilter.value)[0].innerHTML.toLowerCase();
 
         if (!titleText.includes(searchText)) {
-            document.getElementsByTagName('tasks')[0].removeChild(array[i]);
+            document.getElementById('tasks').removeChild(array[i]);
         }
     }
+    searching = false;
 }
 
 function activateSearch() {
@@ -188,6 +192,13 @@ function structureTasksInHtml() {
         finalResult.innerHTML += `<addTask id="showAddTaskMenuButton">+</addTask>`;
 
         tasksDiv.appendChild(finalResult);
+
+        if (!searching) {
+            var arr = document.getElementsByClassName('task');
+            for(var i = 0; i < arr.length; i++) {
+                arr[i].style.animation = 'popupOpen .3s ease-in-out';
+            }
+        }
     }
 }
 
