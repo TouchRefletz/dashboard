@@ -38,52 +38,54 @@
         </div>  
     </header>
 
-    <div id="filterContainer" class="container hidden"> 
-        <div id="addFilter">
-            <label for="selectFilter">Selecione um filtro para a pesquisa</label>
-            <select id="selectFilter">
-                <option value="tasktitle">Título</option>
-                <option value="taskdescription">Descrição</option>
-                <option value="taskdate">Prazo</option>
-                <option value="taskpriority">Prioridade</option>
-                <option value="taskprogress">Status</option>
-            </select>
-            <button class="button" id="chooseFilterButton">Selecionar filtro</button>
+    <div id="pageContent">
+        <div id="filterContainer" class="container hidden"> 
+            <div id="addFilter">
+                <label for="selectFilter">Selecione um filtro para a pesquisa</label>
+                <select id="selectFilter">
+                    <option value="tasktitle">Título</option>
+                    <option value="taskdescription">Descrição</option>
+                    <option value="taskdate">Prazo</option>
+                    <option value="taskpriority">Prioridade</option>
+                    <option value="taskprogress">Status</option>
+                </select>
+                <button class="button" id="chooseFilterButton">Selecionar filtro</button>
+            </div>
         </div>
-    </div>
-
-    <h1 class="title" id="tasksTitle">Tarefas</h1>
-    <div class="tasks" id="tasksDiv"></div>
-
-    <div id="addTasksContainer" class="container hidden">
-        <div id="addTasks">
-            <label for="taskTitle">Título da tarefa</label>
-            <input type="text" id="taskTitle">
-
-            <label for="taskDescription">Descrição da tarefa</label>
-            <input type="text" id="taskDescription">
-
-            <label for="taskDate">Prazo da tarefa</label>
-            <input type="datetime-local" id="taskDate">
-
-            <label for="taskPriority">Prioridade da tarefa</label>
-            <select name="option" id="taskPriority">
-                <option>Baixa</option>
-                <option>Normal</option>
-                <option>Alta</option>
-                <option>Urgente</option>
-            </select>
-
-            <label for="taskProgress">Progressso da tarefa</label>
-            <select name="option" id="taskProgress">
-                <option>Pendente</option>
-                <option>Em andamento</option>
-                <option>Concluída</option>
-            </select>
-
-            <button class="button" id="addTaskButton">Adicionar tarefa</button>
-
-            <button class="button" id="closeTaskMenuButton">Cancelar</button>
+    
+        <h1 class="title" id="tasksTitle">Tarefas</h1>
+        <div class="tasks" id="tasksDiv"></div>
+    
+        <div id="addTasksContainer" class="container hidden">
+            <div id="addTasks">
+                <label for="taskTitle">Título da tarefa</label>
+                <input type="text" id="taskTitle">
+    
+                <label for="taskDescription">Descrição da tarefa</label>
+                <input type="text" id="taskDescription">
+    
+                <label for="taskDate">Prazo da tarefa</label>
+                <input type="datetime-local" id="taskDate">
+    
+                <label for="taskPriority">Prioridade da tarefa</label>
+                <select name="option" id="taskPriority">
+                    <option>Baixa</option>
+                    <option>Normal</option>
+                    <option>Alta</option>
+                    <option>Urgente</option>
+                </select>
+    
+                <label for="taskProgress">Progressso da tarefa</label>
+                <select name="option" id="taskProgress">
+                    <option>Pendente</option>
+                    <option>Em andamento</option>
+                    <option>Concluída</option>
+                </select>
+    
+                <button class="button" id="addTaskButton">Adicionar tarefa</button>
+    
+                <button class="button" id="closeTaskMenuButton">Cancelar</button>
+            </div>
         </div>
     </div>
     <script src="app.js"></script>

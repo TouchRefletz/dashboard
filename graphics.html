@@ -38,47 +38,49 @@
         </div>  
     </header>
 
-    <div id="filterContainer" class="container hidden"> 
-        <div id="addFilter">
-            <label for="selectFilter">Selecione um filtro para a pesquisa</label>
-            <select id="selectFilter">
-                <option value="tasktitle">Título</option>
-                <option value="taskdescription">Descrição</option>
-                <option value="taskdate">Prazo</option>
-                <option value="taskpriority">Prioridade</option>
-                <option value="taskprogress">Status</option>
-            </select>
-            <button class="button" id="chooseFilterButton">Selecionar filtro</button>
+    <div id="pageContent">
+        <div id="filterContainer" class="container hidden"> 
+            <div id="addFilter">
+                <label for="selectFilter">Selecione um filtro para a pesquisa</label>
+                <select id="selectFilter">
+                    <option value="tasktitle">Título</option>
+                    <option value="taskdescription">Descrição</option>
+                    <option value="taskdate">Prazo</option>
+                    <option value="taskpriority">Prioridade</option>
+                    <option value="taskprogress">Status</option>
+                </select>
+                <button class="button" id="chooseFilterButton">Selecionar filtro</button>
+            </div>
         </div>
-    </div>
-
-    <h1 class="title" id="graphicsTitle">Gráficos</h1>
-    <div id="graphicsContainer">
-        <div id="graphicsDiv">
-            <select id="selectGraphics">
-                <option>Gráfico de Pizza</option>
-                <option>Gráfico de Barra</option>
-            </select>
     
-            <div>
-                <canvas id="graphics" width="250" height="250"></canvas>
-
-                <div id="barGraphics"></div>
-
-                <div id="graphicsColorsDiv">
-                    <div>
-                        <div style="background-color: red;"></div>
-                        <p>Tarefas Pendentes</p>
-                    </div>
-                    
-                    <div>
-                        <div style="background-color: white;"></div>
-                        <p>Tarefas Em Andamento</p>
-                    </div>
-                    
-                    <div>
-                        <div style="background-color: green;"></div>
-                        <p>Tarefas Concluídas</p>
+        <h1 class="title" id="graphicsTitle">Gráficos</h1>
+        <div id="graphicsContainer">
+            <div id="graphicsDiv">
+                <select id="selectGraphics">
+                    <option>Gráfico de Pizza</option>
+                    <option>Gráfico de Barra</option>
+                </select>
+        
+                <div>
+                    <canvas id="graphics" width="250" height="250"></canvas>
+    
+                    <div id="barGraphics"></div>
+    
+                    <div id="graphicsColorsDiv">
+                        <div>
+                            <div style="background-color: red;"></div>
+                            <p>Tarefas Pendentes</p>
+                        </div>
+                        
+                        <div>
+                            <div style="background-color: white;"></div>
+                            <p>Tarefas Em Andamento</p>
+                        </div>
+                        
+                        <div>
+                            <div style="background-color: green;"></div>
+                            <p>Tarefas Concluídas</p>
+                        </div>
                     </div>
                 </div>
             </div>

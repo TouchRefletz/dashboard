@@ -91,7 +91,6 @@ function loadTasks() {
     filterButton.addEventListener('click', filter);
     chooseFilterButton.addEventListener('click', closeFilterMenu);
     searchInput.addEventListener('input', activateSearch);
-
     changeSearchButton.addEventListener('click', changeSearch);
 
     structureTasksInHtml();
@@ -356,11 +355,10 @@ function arcCircle(centerX, centerY, radius, startAngle, endAngle, color) {
     drawInGraphics.fill();
 }
 
-function constructPizzaGraphics() {
+function constructPizzaGraphics(radius) {
     graphics.style.display = 'block';
     barGraphicsDiv.style.display = 'none';
 
-    var radius = 100;
     var centerX = graphics.width / 2;
     var centerY = graphics.height / 2;
 
@@ -436,14 +434,32 @@ function constructBarGraphics() {
     createGraphicBar(100 - taskNotStartedPercent - taskUnfinishedPercent, 'green');
 }
 
-function constructGraphics() {
+function constructGraphics(radius) {
+    if (typeof(radius) != 'number') {
+        radius = 100;
+    }
+    if (radius > 100) {
+        radius = 100;
+    }
     if (selectGraphics) {
         if (selectGraphics.value == "Gráfico de Pizza") {
-            constructPizzaGraphics();
+            constructPizzaGraphics(radius);
         } else {
             constructBarGraphics();
         }
     }
+}
+
+function resizeGraphics(info) {
+    var width = info.target.innerWidth;
+
+    if (width > 500) {
+        width = 500;
+    }
+    
+    graphics.setAttribute('width', width / 2);
+    graphics.setAttribute('height', width / 2);
+    constructGraphics(width / 4);
 }
 
 /* COMEÇO DA EXECUÇÂO DO CODE */
@@ -456,8 +472,8 @@ if (tasksDiv) {
 
 if (window.location.pathname == '/graphics.html') {
     constructGraphics();
-    selectGraphics.addEventListener('change', constructGraphics)
-    constructGraphics();
+    selectGraphics.addEventListener('change', constructGraphics);
+    window.addEventListener('resize', resizeGraphics);
 }
 
 

@@ -13,7 +13,7 @@ body {
     display: none;
 }
 
-#tasksTitle {
+#pageContent {
     margin-top: 200px;
 }
 
@@ -26,6 +26,7 @@ body {
     font-family: "Chakra Petch", serif;
     text-align: center;
     font-size: 50px;
+    word-break: break-all;
 }
 
 header {
@@ -45,6 +46,21 @@ header {
     }
 }
 
+@media (max-width: 430px) {
+    #graphicsDiv {
+        flex-direction: column;
+    }
+    #graphicsDiv > div {
+        margin-top: 20px;
+    }
+}
+
+@media (min-width: 430px) {
+    #graphicsDiv {
+        flex-direction: row-reverse;
+    }
+}
+
 @media (max-width: 330px) {
     #headerContent > div > h1 {
         display: none;
@@ -53,12 +69,70 @@ header {
     #headerContent > div > a {
         display: none;
     }
+
+    .taskAllInformationsDiv {
+        flex-direction: column;
+    }
+    .taskInformationDiv {
+        margin-left: 0px;
+    }
+    .taskNameDiv {
+        justify-content: center;
+        align-items: center;
+    }
+    .taskDescription {
+        margin-left: 0px;
+        text-align: center;
+    }
+    .taskButtonsDiv {
+        flex-direction: column;
+    }
 }
 
+@media (min-width: 330px) {
+    .taskNameDiv {
+        align-items: start;
+    }
+    .taskInformationDiv {
+        margin-left: 50px;
+    }
+}
+
+@media (max-width: 280px) {
+    #graphicsColorsDiv > div {
+        flex-direction: column;
+        justify-content: center;
+    }
+    #graphicsColorsDiv > div > div {
+        margin-right: 0px;
+    }
+    #graphicsColorsDiv > div > p {
+        word-break: break-word;
+        width: 80%;
+        text-align: center;
+    }
+}
+
+@media (min-width: 280px) {
+    #graphicsColorsDiv > div > div {
+        margin-right: 10px;
+    }
+}
+ 
 @media (max-width: 230px) {
     menu {
         flex-direction: column;
     }
+    #pageContent {
+        margin-top: 300px;
+    }
+}
+
+#graphicsDiv > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 menu {
@@ -143,8 +217,6 @@ menu {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 50%;
-    flex-direction: row-reverse;
 }
 
 #selectGraphics {
@@ -164,7 +236,6 @@ menu {
 #graphicsColorsDiv > div > div {
     width: 20px;
     height: 20px;
-    margin-right: 10px;
 }
 
 #graphicsColorsDiv > div {
@@ -317,13 +388,11 @@ menu {
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-left: 50px;
 }
 
 .taskNameDiv {
     display: flex;
     flex-direction: column;
-    align-items: start;
     width: 125px;
 }
 
