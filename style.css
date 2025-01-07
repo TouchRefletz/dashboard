@@ -21,6 +21,14 @@ body {
     margin: 200px 0px 100px 0px; /* topo | direita | inferior | esquerda */
 }
 
+#menuButton > img {
+    width: 30px;
+}
+
+#menuButton:hover > img {
+    filter: invert(1);
+}
+
 .title {
     color: white;
     font-family: "Chakra Petch", serif;
@@ -121,10 +129,20 @@ header {
  
 @media (max-width: 230px) {
     menu {
+        margin: 20px 20px;
         flex-direction: column;
     }
-    #pageContent {
-        margin-top: 300px;
+    .headerButton {
+        margin-left: 10px;
+    }
+}
+
+@media (min-width: 230px) {
+    menu {
+        margin: 0px 20px;
+    }
+    .headerButton {
+        margin-left: 0px;
     }
 }
 
@@ -137,13 +155,11 @@ header {
 
 menu {
     display: flex;
-    margin: 0px 20px;
 }
 
 .headerButton {
     padding: 10px;
     margin: 10px;
-    margin-left: 0px;
     background-color: transparent;
     border: 1px solid white;
     color: white;

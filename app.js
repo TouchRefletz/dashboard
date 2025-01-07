@@ -462,6 +462,59 @@ function resizeGraphics(info) {
     constructGraphics(width / 4);
 }
 
+function createMenuButton(headerContent) {
+    var button = document.createElement('button');
+    button.innerHTML = `
+    <!-- fonte: https://www.flaticon.com/br/icones-gratis/menu-aberto -->
+    <img src="imgs/menu.png" alt="Ícone de menu">
+    `
+    button.id = 'menuButton';
+    button.classList.add('button');
+    button.addEventListener("click", changeMenuState);
+    headerContent.insertBefore(button, document.getElementsByTagName('menu')[0]);
+}
+
+function changeMenuState() {
+    var menu = document.getElementsByTagName('menu')[0];
+    var pageContent = document.getElementById('pageContent');
+
+    if (menu.style.display == 'none') {
+        menu.removeAttribute('style');
+        pageContent.style.marginTop = '400px';
+    } else {
+        pageContent.removeAttribute('style');
+        menu.style.display = 'none';
+    }
+}
+
+function changeMenu(info) {
+    var width;
+
+    if (info == undefined) {
+        width = window.innerWidth;
+    } else {
+        width = info.target.innerWidth;
+    }
+
+    var menu = document.getElementsByTagName('menu')[0];
+
+    var headerContent = menu.parentElement;
+    var button = document.getElementById('menuButton');
+
+    if (width <= 230) {
+        menu.style.display = 'none';
+        
+        if (button == undefined) {
+            createMenuButton(headerContent);
+        }
+    } else {
+        if (button != undefined) {
+            headerContent.removeChild(button);
+        }
+        menu.removeAttribute('style');
+    }
+}
+
 /* COMEÇO DA EXECUÇÂO DO CODE */
 
 syncTasks();
@@ -475,6 +528,10 @@ if (window.location.pathname == '/graphics.html') {
     selectGraphics.addEventListener('change', constructGraphics);
     window.addEventListener('resize', resizeGraphics);
 }
+
+changeMenu();
+
+window.addEventListener('resize', changeMenu);
 
 
 
