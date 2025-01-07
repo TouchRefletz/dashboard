@@ -290,6 +290,22 @@ function randomizeNumber() {
     return Math.floor(Math.random() * 10**8);
 }
 
+function taskVerification(taskTitle, taskDate, taskDescription) {
+    if (taskTitle.value == '') {
+        alert('O título não pode ser vazio! Insira um título para criar a tarefa.');
+        return;
+    }
+
+    if (taskDate.value == '') {
+        alert('O prazo para a tarefa não pode ser vazio! Insira um prazo para criar a tarefa.');
+        return;
+    }
+
+    if (taskDescription.value == '') {
+        taskDescription.value = "Nenhuma descrição foi informada.";
+    }
+}
+
 function createTask() {
     if (taskIdFromButton == '') {
         taskIdFromButton = randomizeNumber();
@@ -300,6 +316,8 @@ function createTask() {
     var taskDate = document.getElementById("taskDate");
     var taskPriority = document.getElementById('taskPriority');
     var taskProgress = document.getElementById('taskProgress');
+
+    taskVerification(taskTitle, taskDate, taskDescription);
 
     var time = taskDate.value;
     time = time.split('T')

@@ -39,6 +39,28 @@ header {
     width: 100vw;
 }
 
+@media (max-width: 530px) {
+    #headerContent {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 330px) {
+    #headerContent > div > h1 {
+        display: none;
+    }
+
+    #headerContent > div > a {
+        display: none;
+    }
+}
+
+@media (max-width: 230px) {
+    menu {
+        flex-direction: column;
+    }
+}
+
 menu {
     display: flex;
     margin: 0px 20px;
@@ -219,6 +241,8 @@ menu {
 .taskButtonsDiv {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    margin: 30px 10px;
 }
 
 .taskButtonsDiv > button {
@@ -291,7 +315,9 @@ menu {
 
 .taskInformationDiv {
     display: flex;
+    align-items: center;
     flex-direction: column;
+    margin-left: 50px;
 }
 
 .taskNameDiv {
@@ -312,9 +338,9 @@ menu {
 
 .taskDate, .taskPriority, .taskProgress {
     border-radius: 20px;
-    padding: 10px;
+    padding: 15px;
     font-size: 15px;
-    width: 100px;
+    width: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -339,7 +365,6 @@ menu {
     display: flex;
     flex-direction: column;
     width: 300px;
-    height: 300px;
 }
 
 body {
