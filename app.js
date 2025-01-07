@@ -246,13 +246,17 @@ function addEditTaskEventListener(button) {
         addTaskButton.removeEventListener('click', createTask);
         addTaskButton.addEventListener('click', callEditButton);
 
-        document.getElementById('tasks').removeChild(taskFromButton);
-        
-        for (var i = 0; i < tasksArray.length; i++) {
-            if (tasksArray[i].includes(taskIdFromButton)) {
-                tasksArray.splice(i, 1);
+        taskFromButton.style.animation = 'popupClose .6s ease-in-out';
+
+        setTimeout(() => {
+            document.getElementById('tasks').removeChild(taskFromButton);
+
+            for (var i = 0; i < tasksArray.length; i++) {
+                if (tasksArray[i].includes(taskIdFromButton)) {
+                    tasksArray.splice(i, 1);
+                }
             }
-        }
+        }, 300)
     });
 }
 
@@ -261,15 +265,19 @@ function addDeleteTaskEventListener(button) {
         var taskFromButton = button.parentElement.parentElement;
         taskIdFromButton = button.parentElement.parentElement.id;
 
-        document.getElementById('tasks').removeChild(taskFromButton);
-        
-        for (var i = 0; i < tasksArray.length; i++) {
-            if (tasksArray[i].includes(taskIdFromButton)) {
-                tasksArray.splice(i, 1);
-            }
-        }
+        taskFromButton.style.animation = 'popupClose .6s ease-in-out';
 
-        saveTasks();
+        setTimeout(() => {
+            document.getElementById('tasks').removeChild(taskFromButton);
+
+            for (var i = 0; i < tasksArray.length; i++) {
+                if (tasksArray[i].includes(taskIdFromButton)) {
+                    tasksArray.splice(i, 1);
+                }
+            }
+    
+            saveTasks();
+        }, 300)
     });
 }
 
@@ -350,14 +358,26 @@ function closeTaskMenu() {
 }
 
 function arcCircle(centerX, centerY, radius, startAngle, endAngle, color) {
-    drawInGraphics.fillStyle = color;
-    drawInGraphics.beginPath();
-    drawInGraphics.moveTo(centerX, centerY);
-    drawInGraphics.arc(centerX, centerY, radius, startAngle, endAngle);
-    drawInGraphics.lineTo(centerX, centerY);
-    drawInGraphics.closePath();
-    drawInGraphics.fill();
+    let currentAngle = startAngle;
+
+    function drawStep() {
+        if (Number(currentAngle.toFixed(2)) > endAngle) return; // Sai quando o ângulo final for alcançado
+
+        drawInGraphics.fillStyle = color;
+        drawInGraphics.beginPath();
+        drawInGraphics.moveTo(centerX, centerY);
+        drawInGraphics.arc(centerX, centerY, radius, startAngle * Math.PI, currentAngle * Math.PI);
+        drawInGraphics.lineTo(centerX, centerY);
+        drawInGraphics.closePath();
+        drawInGraphics.fill();
+
+        currentAngle += 0.1; // Incrementa o ângulo
+        setTimeout(drawStep, 50); // Próxima execução em 10ms
+    }
+
+    drawStep(); // Inicia o desenho
 }
+
 
 function constructPizzaGraphics(radius) {
     graphics.style.display = 'block';
@@ -385,22 +405,25 @@ function constructPizzaGraphics(radius) {
     var taskUnfinishedPercent = (2 * taskUnfinished) / tasksArray.length;
     var taskNotStartedPercent = (2 * taskNotStarted) / tasksArray.length;
 
-    taskUnfinishedPercent = taskUnfinishedPercent * Math.PI;
-    taskNotStartedPercent = taskNotStartedPercent * Math.PI;
+    taskUnfinishedPercent = taskUnfinishedPercent;
+    taskNotStartedPercent = taskNotStartedPercent;
 
     drawInGraphics.clearRect(0, 0, graphics.width, graphics.height);
 
     arcCircle(centerX, centerY, radius, 0, taskNotStartedPercent, 'red');
     arcCircle(centerX, centerY, radius, taskNotStartedPercent, taskNotStartedPercent + taskUnfinishedPercent, 'white');
-    arcCircle(centerX, centerY, radius, taskUnfinishedPercent + taskNotStartedPercent,  2 * Math.PI, 'green');
+    arcCircle(centerX, centerY, radius, taskUnfinishedPercent + taskNotStartedPercent,  2, 'green');
 }
 
 function createGraphicBar(percent, color) {
     var div = document.createElement('div');
     div.classList.add('graphicBar');
-    div.style.height = `${percent}%`;
     div.style.backgroundColor = `${color}`;
     barGraphicsDiv.appendChild(div);
+    div.style.height = `0%`;
+    setTimeout(() => {
+        div.style.height = `${percent}%`;
+    }, 1);  
 }
 
 function constructBarGraphics() {
@@ -439,17 +462,30 @@ function constructBarGraphics() {
 }
 
 function constructGraphics(radius) {
-    if (typeof(radius) != 'number') {
-        radius = 100;
-    }
-    if (radius > 100) {
-        radius = 100;
-    }
-    if (selectGraphics) {
-        if (selectGraphics.value == "Gráfico de Pizza") {
-            constructPizzaGraphics(radius);
-        } else {
-            constructBarGraphics();
+    var graphicsDiv = document.getElementById('graphicsDiv');
+
+    if (tasksArray.length > 0) {
+        graphicsDiv.removeAttribute('style');
+        if (typeof(radius) != 'number') {
+            radius = 100;
+        }
+        if (radius > 100) {
+            radius = 100;
+        }
+        if (selectGraphics) {
+            if (selectGraphics.value == "Gráfico de Pizza") {
+                constructPizzaGraphics(radius);
+            } else {
+                constructBarGraphics();
+            }
+        }
+    } else {
+        graphicsDiv.style.display = 'none';
+        var noTaskGraphicWarningText = document.getElementById('noTaskGraphicWarning');
+        if (noTaskGraphicWarningText == undefined) {
+            graphicsDiv.parentElement.innerHTML += `
+            <p id="noTaskGraphicWarning">Não há tarefas para produzir um gráfico. Crie tarefas para visualizar gráficos sobre tais.</p>
+            `
         }
     }
 }

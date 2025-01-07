@@ -227,6 +227,7 @@ menu {
 
 .graphicBar {
     width: 40px;
+    transition: height .5s ease-in-out;
 }
 
 #graphicsDiv {
@@ -450,6 +451,8 @@ menu {
     display: flex;
     flex-direction: column;
     width: 300px;
+    animation: popupOpen .3s ease-in-out;
+    transition: all .3s ease-in-out;
 }
 
 body {
@@ -501,7 +504,17 @@ body {
     }  
     50% {
         transform: scale(0);
+        display: none;
     }
+}
+
+#noTaskGraphicWarning {
+    color: white;
+    font-family: "Chakra Petch", serif;
+    text-align: center;
+    font-size: 30px;
+    word-break: break-word;
+    width: 60%;
 }
 
 .container > #addFilter {
