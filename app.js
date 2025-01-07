@@ -341,8 +341,12 @@ function createTask() {
 }
 
 function closeTaskMenu() {
-    addTasksContainer.style.display = 'none';
-    addTasksContainer.classList.add("hidden"); /* esconde a div */
+    addTasksContainer.style.animation = 'popupClose .6s ease-in-out';
+    setTimeout(() => {
+        addTasksContainer.style.animation = '';
+        addTasksContainer.style.display = 'none';
+        addTasksContainer.classList.add("hidden"); /* esconde a div */
+    }, 300);
 }
 
 function arcCircle(centerX, centerY, radius, startAngle, endAngle, color) {
