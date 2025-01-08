@@ -12,6 +12,12 @@ var filterButton = document.getElementById("filterButton");
 var filterContainer = document.getElementById('filterContainer');
 var chooseFilterButton = document.getElementById("chooseFilterButton");
 var selectFilter = document.getElementById('selectFilter');
+var graphics = document.getElementById('graphics');
+if (graphics) {
+    var drawInGraphics = graphics.getContext('2d');
+}
+var selectGraphics = document.getElementById('selectGraphics');
+var barGraphicsDiv = document.getElementById('barGraphics');
 var changeSearchButton = document.getElementById('changeSearch');
 var searchContainer = document.getElementById('containerSearch');
 var tasksTitle = document.getElementById('tasksTitle');
@@ -19,7 +25,7 @@ var divActionButtons = document.getElementById('divActionButtons');
 var menu = document.getElementsByTagName('menu')[0];
 
 var tasks = ``;
-export var tasksArray = [];
+var tasksArray = [];
 var editTaskBoolean = false;
 var taskIdFromButton = '';
 var tasksXML = '';
@@ -28,16 +34,6 @@ var tasksId = [];
 var searching = false;
 
 /* FUNÇÔES */
-
-function main() {
-    syncTasks();
-
-    if (tasksDiv) {
-        loadTasks();
-        changePageWithWidth();
-        window.addEventListener('resize', changePageWithWidth);
-    }
-}
 
 function saveTasks() {
     tasks = ``;
@@ -73,7 +69,7 @@ function activateSearch() {
     }
 }
 
-export function syncTasks() {
+function syncTasks() {
     tasks = localStorage.getItem('tasks');
     if (tasks != null) {
         const parser = new DOMParser(); // Transformador de XML
@@ -423,6 +419,151 @@ function closeTaskMenu() {
     }, 300);
 }
 
+function arcCircle(centerX, centerY, radius, startAngle, endAngle, color) {
+    let currentAngle = startAngle;
+
+    function drawStep() {
+        if (Number(currentAngle.toFixed(2)) > endAngle) return; // Sai quando o ângulo final for alcançado
+
+        drawInGraphics.fillStyle = color;
+        drawInGraphics.beginPath();
+        drawInGraphics.moveTo(centerX, centerY);
+        drawInGraphics.arc(centerX, centerY, radius, startAngle * Math.PI, currentAngle * Math.PI);
+        drawInGraphics.lineTo(centerX, centerY);
+        drawInGraphics.closePath();
+        drawInGraphics.fill();
+
+        currentAngle += 0.1; // Incrementa o ângulo
+        setTimeout(drawStep, 50); // Próxima execução em 10ms
+    }
+
+    drawStep(); // Inicia o desenho
+}
+
+
+function constructPizzaGraphics(radius) {
+    graphics.style.display = 'block';
+    barGraphicsDiv.style.display = 'none';
+
+    var centerX = graphics.width / 2;
+    var centerY = graphics.height / 2;
+
+    var taskUnfinished = 0;
+    var taskNotStarted = 0;
+
+    for (var i = 0; i < tasksArray.length; i++) {
+        const regex = /<taskProgress>(.*?)<\/taskProgress>/; // Captura o conteúdo dentro de <taskProgress>
+        const match = tasksArray[i].match(regex); // Verifica se há uma correspondência
+        
+        var taskStatus = match[1];
+
+        if (taskStatus == 'Em andamento') {
+            taskUnfinished++;
+        } else if (taskStatus == 'Pendente') {
+            taskNotStarted++;
+        }
+    }
+
+    var taskUnfinishedPercent = (2 * taskUnfinished) / tasksArray.length;
+    var taskNotStartedPercent = (2 * taskNotStarted) / tasksArray.length;
+
+    taskUnfinishedPercent = taskUnfinishedPercent;
+    taskNotStartedPercent = taskNotStartedPercent;
+
+    drawInGraphics.clearRect(0, 0, graphics.width, graphics.height);
+
+    arcCircle(centerX, centerY, radius, 0, taskNotStartedPercent, 'red');
+    arcCircle(centerX, centerY, radius, taskNotStartedPercent, taskNotStartedPercent + taskUnfinishedPercent, 'white');
+    arcCircle(centerX, centerY, radius, taskUnfinishedPercent + taskNotStartedPercent,  2, 'green');
+}
+
+function createGraphicBar(percent, color) {
+    var div = document.createElement('div');
+    div.classList.add('graphicBar');
+    div.style.backgroundColor = `${color}`;
+    barGraphicsDiv.appendChild(div);
+    div.style.height = `0%`;
+    setTimeout(() => {
+        div.style.height = `${percent}%`;
+    }, 1);  
+}
+
+function constructBarGraphics() {
+    drawInGraphics.clearRect(0, 0, graphics.width, graphics.height);
+    graphics.style.display = 'none';
+    barGraphicsDiv.style.display = 'flex';
+
+    var taskUnfinished = 0;
+    var taskNotStarted = 0;
+
+    for (var i = 0; i < tasksArray.length; i++) {
+        const regex = /<taskProgress>(.*?)<\/taskProgress>/; // Captura o conteúdo dentro de <taskProgress>
+        const match = tasksArray[i].match(regex); // Verifica se há uma correspondência
+
+        var taskStatus = match[1];
+
+        if (taskStatus == 'Em andamento') {
+            taskUnfinished++;
+        } else if (taskStatus == 'Pendente') {
+            taskNotStarted++;
+        }
+    }
+
+    var taskUnfinishedPercent = (100 * taskUnfinished) / tasksArray.length;
+    var taskNotStartedPercent = (100 * taskNotStarted) / tasksArray.length;
+
+    if (barGraphicsDiv.childNodes.length > 0) {
+        while (barGraphicsDiv.childNodes.length > 0) {
+            barGraphicsDiv.removeChild(barGraphicsDiv.firstChild);
+        }
+    }
+
+    createGraphicBar(taskUnfinishedPercent, 'white');
+    createGraphicBar(taskNotStartedPercent, 'red');
+    createGraphicBar(100 - taskNotStartedPercent - taskUnfinishedPercent, 'green');
+}
+
+function constructGraphics(radius) {
+    var graphicsDiv = document.getElementById('graphicsDiv');
+
+    if (tasksArray.length > 0) {
+        graphicsDiv.removeAttribute('style');
+        if (typeof(radius) != 'number') {
+            radius = 100;
+        }
+        if (radius > 100) {
+            radius = 100;
+        }
+        if (selectGraphics) {
+            if (selectGraphics.value == "Gráfico de Pizza") {
+                constructPizzaGraphics(radius);
+            } else {
+                constructBarGraphics();
+            }
+        }
+    } else {
+        graphicsDiv.style.display = 'none';
+        var noTaskGraphicWarningText = document.getElementById('noTaskGraphicWarning');
+        if (noTaskGraphicWarningText == undefined) {
+            graphicsDiv.parentElement.innerHTML += `
+            <p id="noTaskGraphicWarning">Não há tarefas para produzir um gráfico. Crie tarefas para visualizar gráficos sobre tais.</p>
+            `
+        }
+    }
+}
+
+function resizeGraphics(info) {
+    var width = info.target.innerWidth;
+
+    if (width > 500) {
+        width = 500;
+    }
+    
+    graphics.setAttribute('width', width / 2);
+    graphics.setAttribute('height', width / 2);
+    constructGraphics(width / 4);
+}
+
 function createMenuButton(headerContent) {
     var button = document.createElement('button');
     button.innerHTML = `
@@ -520,7 +661,19 @@ function changeMenu(info) {
 
 /* COMEÇO DA EXECUÇÂO DO CODE */
 
-main();
+syncTasks();
+
+if (tasksDiv) {
+    loadTasks();
+    changePageWithWidth();
+    window.addEventListener('resize', changePageWithWidth);
+}
+
+if (window.location.pathname == '/graphics.html') {
+    constructGraphics();
+    selectGraphics.addEventListener('change', constructGraphics);
+    window.addEventListener('resize', resizeGraphics);
+}
 
 
 
