@@ -202,6 +202,7 @@ menu {
     align-items: center;
     margin: 20px;
     justify-content: space-between;
+    transition: height .3s ease-in-out;
 }
 
 #headerContent > div {
@@ -307,6 +308,7 @@ menu {
     flex-direction: row-reverse;
     position: absolute;
     right: 13vw;
+    animation: popupOpen .3s ease-in-out;
 }
 
 #filterButton {
@@ -332,6 +334,7 @@ menu {
     align-items: center;
     justify-content: center;
     height: 100px;
+    animation: popupOpen .3s ease-in-out;
 }
 
 #tasks {

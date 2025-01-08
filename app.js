@@ -239,34 +239,45 @@ function changeSearch() {
             pageContent.style.marginTop = '300px';
         }
     } else {
-        searchContainer.classList.add('hidden');
-        divActionButtons.classList.add('hidden');
-        searchContainer.style.display = '';
-        divActionButtons.style.display = '';
-        if (width <= 530) {
-            if (width <= 330) {
-                if (width <= 230) {
-                    if (menu.style.display == 'none') {
-                        pageContent.style.marginTop = '350px';
+        searchContainer.style.animation = 'popupClose .6s ease-in-out';
+        divActionButtons.style.animation = 'popupClose .6s ease-in-out';
+
+        setTimeout(() => {
+            searchContainer.classList.add('hidden');
+            divActionButtons.classList.add('hidden');
+            searchContainer.removeAttribute('style');
+            divActionButtons.removeAttribute('style');
+            if (width <= 530) {
+                if (width <= 330) {
+                    if (width <= 230) {
+                        if (menu.style.display == 'none') {
+                            pageContent.style.marginTop = '350px';
+                        } else {
+                            pageContent.style.marginTop = '450px';
+                        }
                     } else {
-                        pageContent.style.marginTop = '450px';
+                        pageContent.style.marginTop = '200px';
                     }
                 } else {
-                    pageContent.style.marginTop = '200px';
+                    pageContent.style.marginTop = '250px';
                 }
             } else {
-                pageContent.style.marginTop = '250px';
+                pageContent.style.marginTop = '200px';
             }
-        } else {
-            pageContent.style.marginTop = '200px';
-        }
+        }, 300);
     }
 }
 
 function closeFilterMenu() {
-    filterContainer.classList.add('hidden');
-    filterContainer.style.display = '';
-    searchInput.placeholder = `Pesquisar tarefa por ${selectFilter.selectedOptions[0].innerHTML}`;
+    filterContainer.style.animation = 'popupClose .6s ease-in-out';
+
+    setTimeout(() => {
+        filterContainer.removeAttribute('style');
+
+        filterContainer.classList.add('hidden');
+        filterContainer.style.display = '';
+        searchInput.placeholder = `Pesquisar tarefa por ${selectFilter.selectedOptions[0].innerHTML}`;
+    }, 300)
 }
 
 function filter() {
