@@ -21,6 +21,8 @@ var barGraphicsDiv = document.getElementById('barGraphics');
 var changeSearchButton = document.getElementById('changeSearch');
 var searchContainer = document.getElementById('containerSearch');
 var tasksTitle = document.getElementById('tasksTitle');
+var divActionButtons = document.getElementById('divActionButtons');
+var menu = document.getElementsByTagName('menu')[0];
 
 var tasks = ``;
 var tasksArray = [];
@@ -212,14 +214,52 @@ function addButtons(buttons) {
 }
 
 function changeSearch() {
+    var width = window.innerWidth;
     if (searchContainer.classList.contains('hidden')) {
         searchContainer.classList.remove('hidden');
+        divActionButtons.classList.remove('hidden');
+        divActionButtons.style.display = 'flex';
         searchContainer.style.display = 'flex';
-        tasksTitle.style.marginTop = '300px';
+
+        if (width <= 530) {
+            if (width <= 330) {
+                if (width <= 230) {
+                    if (menu.style.display == 'none') {
+                        pageContent.style.marginTop = '450px';
+                    } else {
+                        pageContent.style.marginTop = '550px';
+                    }
+                } else {
+                    pageContent.style.marginTop = '300px';
+                }
+            } else {
+                pageContent.style.marginTop = '350px';
+            }
+        } else {
+            pageContent.style.marginTop = '300px';
+        }
     } else {
         searchContainer.classList.add('hidden');
+        divActionButtons.classList.add('hidden');
         searchContainer.style.display = '';
-        tasksTitle.style.marginTop = '';
+        divActionButtons.style.display = '';
+        if (width <= 530) {
+            if (width <= 330) {
+                if (width <= 230) {
+                    if (menu.style.display == 'none') {
+                        pageContent.style.marginTop = '350px';
+                    } else {
+                        pageContent.style.marginTop = '450px';
+                    }
+                } else {
+                    pageContent.style.marginTop = '200px';
+                }
+            } else {
+                pageContent.style.marginTop = '250px';
+            }
+        } else {
+            pageContent.style.marginTop = '200px';
+        }
     }
 }
 
@@ -531,10 +571,54 @@ function changeMenuState() {
 
     if (menu.style.display == 'none') {
         menu.removeAttribute('style');
-        pageContent.style.marginTop = '400px';
+        pageContent.style.marginTop = '450px';
     } else {
-        pageContent.removeAttribute('style');
+        if (!searchContainer.classList.contains('hidden')) {
+            pageContent.style.marginTop = '300px';
+        } else {
+            pageContent.removeAttribute('style');
+        }
         menu.style.display = 'none';
+    }
+}
+
+function changePageWithWidth(info) {
+    var width;
+
+    if (info == undefined) {
+        width = window.innerWidth;
+    } else {
+        width = info.target.innerWidth;
+    }
+    
+    if (width <= 530) {
+        if (width >= 330) {
+            pageContent.style.marginTop = '250px';
+        }
+    } else {
+        pageContent.style.marginTop = '200px';
+    }
+
+    changeMenu(info);
+    changeSearchStyle(info);
+}
+
+function changeSearchStyle(info) {
+    var width;
+
+    if (info == undefined) {
+        width = window.innerWidth;
+    } else {
+        width = info.target.innerWidth;
+    }
+
+    if (width <= 430) {
+        divActionButtons.style.position = 'static';
+        divActionButtons.style.marginBottom = '30px';
+        searchInput.style.textAlign = 'center';
+    } else {
+        divActionButtons.removeAttribute('style');
+        searchInput.removeAttribute('style');
     }
 }
 
@@ -546,8 +630,6 @@ function changeMenu(info) {
     } else {
         width = info.target.innerWidth;
     }
-
-    var menu = document.getElementsByTagName('menu')[0];
 
     var headerContent = menu.parentElement;
     var button = document.getElementById('menuButton');
@@ -580,9 +662,9 @@ if (window.location.pathname == '/graphics.html') {
     window.addEventListener('resize', resizeGraphics);
 }
 
-changeMenu();
+changePageWithWidth();
 
-window.addEventListener('resize', changeMenu);
+window.addEventListener('resize', changePageWithWidth);
 
 
 

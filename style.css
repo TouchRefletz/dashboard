@@ -52,6 +52,15 @@ header {
     #headerContent {
         flex-direction: column;
     }
+    #divActionButtons {
+        top: 76%;
+    }
+}
+
+@media (min-width: 530px) {
+    #divActionButtons {
+        top: 70%;
+    }
 }
 
 @media (max-width: 430px) {
@@ -275,9 +284,10 @@ menu {
     color: white;
     font-family: "Chakra Petch", serif;
     font-size: 20px;
-    width: 100%;
-    padding-left: 20px;
+    width: 75%;
+    padding: 0px 20px;
     height: 50%;
+    text-overflow: ellipsis;
 }
 
 #searchButton {
@@ -288,8 +298,15 @@ menu {
     border-radius: 5px;
     font-family: "Chakra Petch", serif;
     transition: all .1s ease-in-out;
+}
+
+#divActionButtons {
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse;
     position: absolute;
-    right: 11%;
+    right: 13vw;
 }
 
 #filterButton {
@@ -300,8 +317,7 @@ menu {
     border-radius: 5px;
     font-family: "Chakra Petch", serif;
     transition: all .1s ease-in-out;
-    position: absolute;
-    right: 16%;
+    margin: 0px 5px;
 }
 
 #searchButton:hover, #filterButton:hover {
@@ -310,7 +326,7 @@ menu {
 }
 
 #containerSearch {
-    width: 800px;
+    width: 100%;
     margin: 0px 20px;
     /* display: flex; */
     align-items: center;
