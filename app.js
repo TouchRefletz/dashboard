@@ -665,6 +665,8 @@ syncTasks();
 
 if (tasksDiv) {
     loadTasks();
+    changePageWithWidth();
+    window.addEventListener('resize', changePageWithWidth);
 }
 
 if (window.location.pathname == '/graphics.html') {
@@ -672,10 +674,6 @@ if (window.location.pathname == '/graphics.html') {
     selectGraphics.addEventListener('change', constructGraphics);
     window.addEventListener('resize', resizeGraphics);
 }
-
-changePageWithWidth();
-
-window.addEventListener('resize', changePageWithWidth);
 
 
 
