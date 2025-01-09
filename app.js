@@ -108,11 +108,12 @@ function loadTasks() {
 }
 
 function structureTasksInHtml() {
-    var tasks;
+    syncTasks();
+
+    var tasks = tasksXML.getElementsByTagName('task');;
     var tasksMainDiv;
 
     if (tasks != null) {
-        tasks = tasksXML.getElementsByTagName('task');
         tasksMainDiv = tasksXML.getElementsByTagName('tasks');
     }
 
