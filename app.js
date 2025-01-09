@@ -99,7 +99,9 @@ function loadTasks() {
     searchInput.addEventListener('input', activateSearch);
     changeSearchButton.addEventListener('click', changeSearch);
 
-    structureTasksInHtml();
+    if (tasks != null) {
+        structureTasksInHtml();
+    }
     activateEditButtons();
     activateDeleteButtons();
 
