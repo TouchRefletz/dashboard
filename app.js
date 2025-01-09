@@ -99,9 +99,7 @@ function loadTasks() {
     searchInput.addEventListener('input', activateSearch);
     changeSearchButton.addEventListener('click', changeSearch);
 
-    if (tasks != null) {
-        structureTasksInHtml();
-    }
+    structureTasksInHtml();
     activateEditButtons();
     activateDeleteButtons();
 
@@ -110,17 +108,20 @@ function loadTasks() {
 }
 
 function structureTasksInHtml() {
-    var tasks = tasksXML.getElementsByTagName('task');
-    var tasksMainDiv = tasksXML.getElementsByTagName('tasks');
+    var tasks;
+    var tasksMainDiv;
+
+    if (tasks != null) {
+        tasks = tasksXML.getElementsByTagName('task');
+        tasksMainDiv = tasksXML.getElementsByTagName('tasks');
+    }
 
     tasksDiv.innerHTML = '';
 
-    if (tasksMainDiv == undefined) {
-        return;
-    } else {
-        var finalResult = document.createElement('div');
-        finalResult.id = 'tasks';
+    var finalResult = document.createElement('div');
+    finalResult.id = 'tasks';
 
+    if (tasksMainDiv != undefined) {
         if (tasks.length > 0) {
             for (var i = 0; i < tasks.length; i++) {
                 var taskDiv = document.createElement('div');
@@ -132,7 +133,6 @@ function structureTasksInHtml() {
                 var taskDate = tasks[i].getElementsByTagName("taskDate")[0];
                 var taskProgress = tasks[i].getElementsByTagName("taskProgress")[0];
                 var taskPriority = tasks[i].getElementsByTagName("taskPriority")[0];
-                var buttons = tasks[i].getElementsByTagName("button");
 
                 var AllTaskInfo = document.createElement('div');
                 AllTaskInfo.classList.add('taskAllInformationsDiv');
@@ -192,16 +192,16 @@ function structureTasksInHtml() {
                 finalResult.appendChild(taskDiv);
             }
         }
+    }
+    
+    finalResult.innerHTML += `<addTask id="showAddTaskMenuButton">+</addTask>`;
 
-        finalResult.innerHTML += `<addTask id="showAddTaskMenuButton">+</addTask>`;
+    tasksDiv.appendChild(finalResult);
 
-        tasksDiv.appendChild(finalResult);
-
-        if (!searching) {
-            var arr = document.getElementsByClassName('task');
-            for(var i = 0; i < arr.length; i++) {
-                arr[i].style.animation = 'popupOpen .3s ease-in-out';
-            }
+    if (!searching) {
+        var arr = document.getElementsByClassName('task');
+        for(var i = 0; i < arr.length; i++) {
+            arr[i].style.animation = 'popupOpen .3s ease-in-out';
         }
     }
 }
