@@ -23,6 +23,8 @@ var searchContainer = document.getElementById('containerSearch');
 var tasksTitle = document.getElementById('tasksTitle');
 var divActionButtons = document.getElementById('divActionButtons');
 var menu = document.getElementsByTagName('menu')[0];
+var timerButton = document.getElementById('timerButton');
+var timerContainer = document.getElementById('timerContainer');
 
 var tasks = ``;
 var tasksArray = [];
@@ -98,6 +100,7 @@ function loadTasks() {
     chooseFilterButton.addEventListener('click', closeFilterMenu);
     searchInput.addEventListener('input', activateSearch);
     changeSearchButton.addEventListener('click', changeSearch);
+    timerButton.addEventListener('click', showTimerMenu)
 
     structureTasksInHtml();
     activateEditButtons();
@@ -105,6 +108,11 @@ function loadTasks() {
 
     var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
     showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu);
+}
+
+function showTimerMenu() {
+    timerContainer.classList.remove('hidden');
+    timerContainer.style.display = 'flex';
 }
 
 function structureTasksInHtml() {

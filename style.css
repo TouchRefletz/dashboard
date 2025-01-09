@@ -535,16 +535,37 @@ body {
     width: 60%;
 }
 
-.container > #addFilter {
+#addTimer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.frameTimer {
+    width: 50px;
+    height: 150px;
+    mask-image: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(175,174,48,0) 100%);
+}
+
+.timerSlider {
+    margin: 0px 10px;
+    position: relative;
+    top: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.container > #addFilter, .container > #addTimer {
     color: white;
     font-family: "Chakra Petch", serif;
     width: 50vw;
     height: 50vh;
     padding: 100px;
     display: flex;
-    flex-direction: column;
     background-color: black;
-    justify-content: center;
     border-radius: 25px;
     border: 1px solid white;
     box-shadow: 10px 5px 5px white; /* distância x | distância y | blur | cor */
