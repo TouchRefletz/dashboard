@@ -113,6 +113,44 @@ function loadTasks() {
 function showTimerMenu() {
     timerContainer.classList.remove('hidden');
     timerContainer.style.display = 'flex';
+
+    var timerUps = document.getElementsByClassName('timerUp');
+    var timerDowns = document.getElementsByClassName('timerDown');
+
+    for (var i = 0; i < timerUps.length; i++) {
+        addEventListenerForTimerUp(timerUps[i]);
+    }
+
+    for (var i = 0; i < timerDowns.length; i++) {
+        timerDowns[i].style.transform = 'rotate(180deg)';
+        addEventListenerForTimerDown(timerDowns[i]);
+    }
+}
+
+function addEventListenerForTimerUp(timerUp) {
+    var timer = timerUp.parentElement.getElementsByClassName('frameTimer')[0].getElementsByClassName('timerSlider')[0];
+    timer.style.top = `15px`;
+    timerUp.addEventListener('click', () => {
+        var timer = timerUp.parentElement.getElementsByClassName('frameTimer')[0].getElementsByClassName('timerSlider')[0];
+        var oldStyle = Number(timer.style.top.replace('px', ''));
+        if (oldStyle >= 57) {
+            return;
+        }
+        timer.style.top = `${oldStyle + 42}px`;
+    })
+}
+
+function addEventListenerForTimerDown(timerDown) {
+    var timer = timerDown.parentElement.getElementsByClassName('frameTimer')[0].getElementsByClassName('timerSlider')[0];
+    timer.style.top = `15px`;
+    timerDown.addEventListener('click', () => {
+        var timer = timerDown.parentElement.getElementsByClassName('frameTimer')[0].getElementsByClassName('timerSlider')[0];
+        var oldStyle = Number(timer.style.top.replace('px', ''));
+        if (oldStyle <= -321) {
+            return;
+        }
+        timer.style.top = `${oldStyle - 42}px`;
+    })
 }
 
 function structureTasksInHtml() {

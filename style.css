@@ -548,6 +548,45 @@ body {
     mask-image: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(175,174,48,0) 100%);
 }
 
+#timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.timerButton {
+    background-color: transparent;
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+    font-family: "Chakra Petch", serif;
+    transition: all .3s ease-in-out;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timerDown {
+    transform: rotate(180deg);
+}
+
+.timerButton:hover {
+    background-color: white;
+    transform: scale(1.1);
+    color: black;
+    cursor: pointer;
+}
+
+.timerButton:hover > img {
+    filter: invert(1);
+}
+
+.timerButton > img {
+    width: 30px;
+}
+
 .timerSlider {
     margin: 0px 10px;
     position: relative;
@@ -558,7 +597,7 @@ body {
     justify-content: center;
 }
 
-.container > #addFilter, .container > #addTimer {
+.container > #addTimer {
     color: white;
     font-family: "Chakra Petch", serif;
     width: 50vw;
@@ -570,6 +609,22 @@ body {
     border: 1px solid white;
     box-shadow: 10px 5px 5px white; /* distância x | distância y | blur | cor */
 }
+
+.container > #addFilter {
+    color: white;
+    font-family: "Chakra Petch", serif;
+    width: 50vw;
+    height: 50vh;
+    padding: 100px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: black;
+    border-radius: 25px;
+    border: 1px solid white;
+    box-shadow: 10px 5px 5px white; /* distância x | distância y | blur | cor */
+}
+
 
 .container > #addFilter > select {
     color: white;
