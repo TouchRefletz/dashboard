@@ -750,7 +750,11 @@ function changeMenuState() {
 
     if (menu.style.display == 'none') {
         menu.removeAttribute('style');
-        pageContent.style.marginTop = '500px';
+        if (window.location.pathname == '/graphics.html') {
+            pageContent.style.marginTop = '400px';
+        } else {
+            pageContent.style.marginTop = '500px';
+        }
     } else {
         if (!searchContainer.classList.contains('hidden')) {
             pageContent.style.marginTop = '300px';
@@ -779,7 +783,9 @@ function changePageWithWidth(info) {
     }
 
     changeMenu(info);
-    changeSearchStyle(info);
+    if (window.location.pathname != '/graphics.html') {
+        changeSearchStyle(info);
+    }
 }
 
 function changeSearchStyle(info) {
@@ -833,8 +839,6 @@ syncTasks();
 
 if (tasksDiv) {
     loadTasks();
-    changePageWithWidth();
-    window.addEventListener('resize', changePageWithWidth);
 }
 
 if (window.location.pathname == '/graphics.html') {
@@ -842,6 +846,9 @@ if (window.location.pathname == '/graphics.html') {
     selectGraphics.addEventListener('change', constructGraphics);
     window.addEventListener('resize', resizeGraphics);
 }
+
+changePageWithWidth();
+window.addEventListener('resize', changePageWithWidth);
 
 
 
