@@ -25,6 +25,7 @@ var divActionButtons = document.getElementById('divActionButtons');
 var menu = document.getElementsByTagName('menu')[0];
 var timerButton = document.getElementById('timerButton');
 var timerContainer = document.getElementById('timerContainer');
+var startTimerButton = document.getElementById('startTimer');
 
 var tasks = ``;
 var tasksArray = [];
@@ -100,7 +101,8 @@ function loadTasks() {
     chooseFilterButton.addEventListener('click', closeFilterMenu);
     searchInput.addEventListener('input', activateSearch);
     changeSearchButton.addEventListener('click', changeSearch);
-    timerButton.addEventListener('click', showTimerMenu)
+    timerButton.addEventListener('click', showTimerMenu);
+    startTimerButton.addEventListener('click', startTimer);
 
     structureTasksInHtml();
     activateEditButtons();
@@ -108,6 +110,58 @@ function loadTasks() {
 
     var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
     showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu);
+}
+
+function startTimer() {
+    var interval = setInterval(() => {
+        var minutes2 = document.getElementById('timerSliderMinutes2');
+        
+
+        if (Number(minutes2.getAttribute('value')) > 0) {
+            var oldStyle = Number(minutes2.style.top.replace('px', ''));
+            minutes2.style.top = `${oldStyle + 42}px`;
+            minutes2.setAttribute('value', Number(minutes2.getAttribute('value')) - 1);
+        } else {
+            var minutes1 = document.getElementById('timerSliderMinutes1');
+    
+            if (Number(minutes1.getAttribute('value')) > 0) {
+    
+                minutes1.setAttribute('value', Number(minutes1.getAttribute('value')) - 1);
+                var oldStyle = Number(minutes1.style.top.replace('px', ''));
+                minutes1.style.top = `${oldStyle + 42}px`;
+    
+                minutes2.setAttribute('value', 9);
+                minutes2.style.top = `${-363}px`;
+            } else {
+                var hours2 = document.getElementById('timerSliderHours2');
+    
+                if (Number(hours2.getAttribute('value')) > 0) {
+    
+                    hours2.setAttribute('value', Number(hours2.getAttribute('value')) - 1);
+                    var oldStyle = Number(hours2.style.top.replace('px', ''));
+                    hours2.style.top = `${oldStyle + 42}px`;
+        
+                    minutes1.setAttribute('value', 5);
+                    minutes1.style.top = `${-195}px`;
+                } else {
+                    var hours1 = document.getElementById('timerSliderHours1');
+    
+                    if (Number(hours1.getAttribute('value')) > 0) {
+    
+                        hours1.setAttribute('value', Number(hours1.getAttribute('value')) - 1);
+                        var oldStyle = Number(hours1.style.top.replace('px', ''));
+                        hours1.style.top = `${oldStyle + 42}px`;
+            
+                        hours2.setAttribute('value', 9);
+                        hours2.style.top = `${-363}px`;
+                    } else {
+                        alert('timer acabou');
+                        clearInterval(interval);
+                    }
+                }
+            }
+        }
+    }, 1000);
 }
 
 function showTimerMenu() {
@@ -185,7 +239,7 @@ function addEventListenerForTimerDown(timerDown) {
                 return;
             }
         }
-        
+
         if (oldStyle <= -405) {
             return;
         }
