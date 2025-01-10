@@ -373,11 +373,11 @@ function changeSearch() {
 
         if (width <= 530) {
             if (width <= 330) {
-                if (width <= 230) {
+                if (width <= 300) {
                     if (menu.style.display == 'none') {
-                        pageContent.style.marginTop = '450px';
+                        pageContent.style.marginTop = '500px';
                     } else {
-                        pageContent.style.marginTop = '550px';
+                        pageContent.style.marginTop = '600px';
                     }
                 } else {
                     pageContent.style.marginTop = '300px';
@@ -399,11 +399,11 @@ function changeSearch() {
             divActionButtons.removeAttribute('style');
             if (width <= 530) {
                 if (width <= 330) {
-                    if (width <= 230) {
+                    if (width <= 300) {
                         if (menu.style.display == 'none') {
                             pageContent.style.marginTop = '350px';
                         } else {
-                            pageContent.style.marginTop = '450px';
+                            pageContent.style.marginTop = '500px';
                         }
                     } else {
                         pageContent.style.marginTop = '200px';
@@ -732,7 +732,7 @@ function changeMenuState() {
 
     if (menu.style.display == 'none') {
         menu.removeAttribute('style');
-        pageContent.style.marginTop = '450px';
+        pageContent.style.marginTop = '500px';
     } else {
         if (!searchContainer.classList.contains('hidden')) {
             pageContent.style.marginTop = '300px';
@@ -795,7 +795,7 @@ function changeMenu(info) {
     var headerContent = menu.parentElement;
     var button = document.getElementById('menuButton');
 
-    if (width <= 230) {
+    if (width <= 300) {
         menu.style.display = 'none';
         
         if (button == undefined) {
