@@ -33,6 +33,7 @@ var editTaskBoolean = false;
 var taskIdFromButton = '';
 var tasksXML = '';
 var tasksId = [];
+var timerEnded = false;
 
 var searching = false;
 
@@ -112,55 +113,62 @@ function loadTasks() {
     showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu);
 }
 
+function runTimerForSlider(index) {
+    var sliderElement = document.getElementById('slider').getElementsByClassName('timer')[index].getElementsByClassName('frameTimer')[0].getElementsByClassName('timerSlider')[0];
+
+    if (Number(sliderElement.getAttribute('value')) > 0) {
+        runOneSecondOfTimerSlider(sliderElement);
+    } else {
+        resetTimerElement(sliderElement);
+
+        runTimerForSlider(index - 1);
+    }
+}
+
+function runOneSecondOfTimerSlider(sliderElement) {
+    var oldStyle = Number(sliderElement.style.top.replace('px', ''));
+    sliderElement.style.top = `${oldStyle + 42}px`;
+    sliderElement.setAttribute('value', Number(sliderElement.getAttribute('value')) - 1);
+}
+
+function resetTimerElement(sliderElement) {
+    if (sliderElement.id == 'timerSliderMinutes1') {
+        sliderElement.setAttribute('value', 5);
+        sliderElement.style.top = `${-195}px`;
+    } else {
+        sliderElement.setAttribute('value', 9);
+        sliderElement.style.top = `${-363}px`;
+    }
+}
+
+function checkIfTimerEnded(i) {
+    if (i < 0) {
+        timerEnded = true;
+        return;
+    }
+
+    var slider = document.getElementById('slider').getElementsByClassName('timer')[i].getElementsByClassName('frameTimer')[0].getElementsByClassName('timerSlider')[0];
+
+    if (Number(slider.getAttribute('value')) == 0) {
+        checkIfTimerEnded(i - 1);
+    }
+}
+
+function endTimer(interval) {
+    if (!timerEnded) {
+        runTimerForSlider(3);
+    } else {
+        clearInterval(interval);
+        alert('acabou o timer');
+        timerEnded = false;
+    }
+}
+
 function startTimer() {
     var interval = setInterval(() => {
-        var minutes2 = document.getElementById('timerSliderMinutes2');
-        
+        checkIfTimerEnded(3);
 
-        if (Number(minutes2.getAttribute('value')) > 0) {
-            var oldStyle = Number(minutes2.style.top.replace('px', ''));
-            minutes2.style.top = `${oldStyle + 42}px`;
-            minutes2.setAttribute('value', Number(minutes2.getAttribute('value')) - 1);
-        } else {
-            var minutes1 = document.getElementById('timerSliderMinutes1');
-    
-            if (Number(minutes1.getAttribute('value')) > 0) {
-    
-                minutes1.setAttribute('value', Number(minutes1.getAttribute('value')) - 1);
-                var oldStyle = Number(minutes1.style.top.replace('px', ''));
-                minutes1.style.top = `${oldStyle + 42}px`;
-    
-                minutes2.setAttribute('value', 9);
-                minutes2.style.top = `${-363}px`;
-            } else {
-                var hours2 = document.getElementById('timerSliderHours2');
-    
-                if (Number(hours2.getAttribute('value')) > 0) {
-    
-                    hours2.setAttribute('value', Number(hours2.getAttribute('value')) - 1);
-                    var oldStyle = Number(hours2.style.top.replace('px', ''));
-                    hours2.style.top = `${oldStyle + 42}px`;
-        
-                    minutes1.setAttribute('value', 5);
-                    minutes1.style.top = `${-195}px`;
-                } else {
-                    var hours1 = document.getElementById('timerSliderHours1');
-    
-                    if (Number(hours1.getAttribute('value')) > 0) {
-    
-                        hours1.setAttribute('value', Number(hours1.getAttribute('value')) - 1);
-                        var oldStyle = Number(hours1.style.top.replace('px', ''));
-                        hours1.style.top = `${oldStyle + 42}px`;
-            
-                        hours2.setAttribute('value', 9);
-                        hours2.style.top = `${-363}px`;
-                    } else {
-                        alert('timer acabou');
-                        clearInterval(interval);
-                    }
-                }
-            }
-        }
+        endTimer(interval);
     }, 1000);
 }
 
