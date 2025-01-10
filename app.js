@@ -33,7 +33,9 @@ var editTaskBoolean = false;
 var taskIdFromButton = '';
 var tasksXML = '';
 var tasksId = [];
+
 var timerEnded = false;
+var timerInterval;
 
 var searching = false;
 
@@ -154,21 +156,37 @@ function checkIfTimerEnded(i) {
     }
 }
 
-function endTimer(interval) {
+function endTimer(timerInterval) {
     if (!timerEnded) {
         runTimerForSlider(3);
     } else {
-        clearInterval(interval);
-        alert('acabou o timer');
+        clearInterval(timerInterval);
         timerEnded = false;
+        resetTimerButton();
     }
 }
 
-function startTimer() {
-    var interval = setInterval(() => {
-        checkIfTimerEnded(3);
+function resetTimerButton() {
+    startTimerButton.innerHTML = "Iniciar Timer";
+    startTimerButton.removeEventListener('click', stopTimer);
+    startTimerButton.addEventListener('click', startTimer);
+}
 
-        endTimer(interval);
+function stopTimer() {
+    timerEnded = true;
+    endTimer(timerInterval);
+
+    resetTimerButton();
+}
+
+function startTimer() {
+    startTimerButton.innerHTML = "Pausar Timer";
+    startTimerButton.removeEventListener('click', startTimer);
+    startTimerButton.addEventListener('click', stopTimer);
+
+    timerInterval = setInterval(() => {
+        endTimer(timerInterval);
+        checkIfTimerEnded(3);
     }, 1000);
 }
 
