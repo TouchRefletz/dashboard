@@ -139,14 +139,17 @@ function addEventListenerForTimerUp(timerUp) {
         }
 
         timer.style.top = `${oldStyle + 42}px`;
+        timer.setAttribute('value', Number(timer.getAttribute('value')) - 1);
 
         if (timer.id == 'timerSliderMinutes1') {
             if (timer.style.top.replace('px', '') >= 57) {
+                timer.setAttribute('value', 5);
                 timer.style.top = `${-195}px`;
                 return;
             }
         } else {
             if (timer.style.top.replace('px', '') >= 57) {
+                timer.setAttribute('value', 9);
                 timer.style.top = `${-363}px`;
                 return;
             }
@@ -156,27 +159,35 @@ function addEventListenerForTimerUp(timerUp) {
 
 function addEventListenerForTimerDown(timerDown) {
     var timer = timerDown.parentElement.getElementsByClassName('frameTimer')[0].getElementsByClassName('timerSlider')[0];
+
     timer.style.top = `15px`;
+
+    timer.setAttribute('value', 0);
+
     timerDown.addEventListener('click', () => {
         var timer = timerDown.parentElement.getElementsByClassName('frameTimer')[0].getElementsByClassName('timerSlider')[0];
+
         var oldStyle = Number(timer.style.top.replace('px', ''));
 
-        if (oldStyle <= -363) {
-            return;
-        }
-
         timer.style.top = `${oldStyle - 42}px`;
+        timer.setAttribute('value', Number(timer.getAttribute('value')) + 1);
 
         if (timer.id == 'timerSliderMinutes1') {
             if (timer.style.top.replace('px', '') <= -237) {
+                timer.setAttribute('value', 0);
                 timer.style.top = `15px`;
                 return;
             }
         } else {
-            if (timer.style.top.replace('px', '') <= -363) {
+            if (timer.style.top.replace('px', '') <= -405) {
+                timer.setAttribute('value', 0);
                 timer.style.top = `15px`;
                 return;
             }
+        }
+        
+        if (oldStyle <= -405) {
+            return;
         }
     })
 }
