@@ -133,10 +133,24 @@ function addEventListenerForTimerUp(timerUp) {
     timerUp.addEventListener('click', () => {
         var timer = timerUp.parentElement.getElementsByClassName('frameTimer')[0].getElementsByClassName('timerSlider')[0];
         var oldStyle = Number(timer.style.top.replace('px', ''));
+
         if (oldStyle >= 57) {
             return;
         }
+
         timer.style.top = `${oldStyle + 42}px`;
+
+        if (timer.id == 'timerSliderMinutes1') {
+            if (timer.style.top.replace('px', '') >= 57) {
+                timer.style.top = `${-195}px`;
+                return;
+            }
+        } else {
+            if (timer.style.top.replace('px', '') >= 57) {
+                timer.style.top = `${-363}px`;
+                return;
+            }
+        }
     })
 }
 
@@ -146,10 +160,24 @@ function addEventListenerForTimerDown(timerDown) {
     timerDown.addEventListener('click', () => {
         var timer = timerDown.parentElement.getElementsByClassName('frameTimer')[0].getElementsByClassName('timerSlider')[0];
         var oldStyle = Number(timer.style.top.replace('px', ''));
-        if (oldStyle <= -321) {
+
+        if (oldStyle <= -363) {
             return;
         }
+
         timer.style.top = `${oldStyle - 42}px`;
+
+        if (timer.id == 'timerSliderMinutes1') {
+            if (timer.style.top.replace('px', '') <= -237) {
+                timer.style.top = `15px`;
+                return;
+            }
+        } else {
+            if (timer.style.top.replace('px', '') <= -363) {
+                timer.style.top = `15px`;
+                return;
+            }
+        }
     })
 }
 
