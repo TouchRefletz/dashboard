@@ -30,6 +30,7 @@ var startTimerButton = document.getElementById('startTimer');
 var completeTimer = document.getElementById('completeTimer');
 var closeTimerButton = document.getElementById('closeTimer');
 var timerFocusMode = document.getElementById('timerFocusMode');
+var timerTiredModeButton = document.getElementById('timerTiredMode');
 
 var tasks = ``;
 var tasksArray = [];
@@ -112,6 +113,7 @@ function loadTasks() {
     startTimerButton.addEventListener('click', startTimer);
     closeTimerButton.addEventListener('click', closeTimer);
     timerFocusMode.addEventListener('click', timerFocus);
+    timerTiredModeButton.addEventListener('click', timerTiredMode);
 
     structureTasksInHtml();
     activateEditButtons();
@@ -127,6 +129,13 @@ function timerFocus() {
     setUpTimerSlider('timerSliderMinutes1', 0);
     setUpTimerSlider('timerSliderHours2', 5);
     setUpTimerSlider('timerSliderHours1', 2);
+}
+
+function timerTiredMode() {
+    setUpTimerSlider('timerSliderMinutes2', 0);
+    setUpTimerSlider('timerSliderMinutes1', 0);
+    setUpTimerSlider('timerSliderHours2', 5);
+    setUpTimerSlider('timerSliderHours1', 0);
 }
 
 function setUpTimerSlider(slider, number) {
