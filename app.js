@@ -129,8 +129,8 @@ function runTimerForSlider(index) {
 }
 
 function runOneSecondOfTimerSlider(sliderElement) {
-    var oldStyle = Number(sliderElement.style.top.replace('px', ''));
-    sliderElement.style.top = `${oldStyle + 42}px`;
+    var sliderValue = Number(sliderElement.getAttribute('value'));
+    sliderElement.style.top = `${((42 * (sliderValue - 1)) * -1) + 15}px`;
     sliderElement.setAttribute('value', Number(sliderElement.getAttribute('value')) - 1);
 }
 
