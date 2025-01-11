@@ -23,6 +23,7 @@ var searchContainer = document.getElementById('containerSearch');
 var tasksTitle = document.getElementById('tasksTitle');
 var divActionButtons = document.getElementById('divActionButtons');
 var menu = document.getElementsByTagName('menu')[0];
+var changeLightButton = document.getElementById('changeLightButton');
 
 var timerButton = document.getElementById('timerButton');
 var timerContainer = document.getElementById('timerContainer');
@@ -114,6 +115,7 @@ function loadTasks() {
     closeTimerButton.addEventListener('click', closeTimer);
     timerFocusMode.addEventListener('click', timerFocus);
     timerTiredModeButton.addEventListener('click', timerTiredMode);
+    changeLightButton.addEventListener('click', changeMode);
 
     structureTasksInHtml();
     activateEditButtons();
@@ -122,6 +124,22 @@ function loadTasks() {
 
     var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
     showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu);
+}
+
+function changeMode() {
+    var root = document.querySelector(':root');
+    var rootStyles = getComputedStyle(root);
+    if (rootStyles.getPropertyValue('--main') == 'black') {
+        root.style.setProperty('--main', 'white');
+        root.style.setProperty('--main-inverse', 'black');
+        root.style.setProperty('--main-image', 'invert(0)');
+        root.style.setProperty('--main-image-inverse', 'invert(1)');
+    } else {
+        root.style.setProperty('--main', 'black');
+        root.style.setProperty('--main-inverse', 'white');
+        root.style.setProperty('--main-image', 'invert(1)');
+        root.style.setProperty('--main-image-inverse', 'invert(0)');
+    }
 }
 
 function timerFocus() {

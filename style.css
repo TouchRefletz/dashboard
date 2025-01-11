@@ -7,7 +7,9 @@
 
 :root {
     --main: white;
+    --main-image: invert(0);
     --main-inverse: black;
+    --main-image-inverse: invert(1);
     --text-color: var(--main);
     --back-color: var(--main-inverse);
     --border-default: 1px solid var(--main);
@@ -15,6 +17,10 @@
     --menus-shadow: 10px 5px 5px var(--main);
     --back-inverse-color: var(--main);
     --text-inverse-color: var(--main-inverse);
+}
+
+img {
+    filter: var(--main-image);
 }
 
 body {
@@ -38,7 +44,7 @@ body {
 }
 
 #menuButton:hover > img {
-    filter: invert(1);
+    filter: var(--main-image-inverse);
 }
 
 .title {
@@ -205,7 +211,7 @@ menu {
 }
 
 .headerButton:hover > img {
-    filter: invert(1);
+    filter: var(--main-image-inverse);
 }
 
 .headerButton > img {
@@ -399,7 +405,7 @@ menu {
 }
 
 .taskButtonsDiv > button:hover > img {
-    filter: invert(1);
+    filter: var(--main-image-inverse);
 }
 
 .taskButtonsDiv > button > img {
@@ -613,7 +619,7 @@ body {
 }
 
 .timerButton:hover > img {
-    filter: invert(1);
+    filter: var(--main-image-inverse);
 }
 
 .timerButton > img {
