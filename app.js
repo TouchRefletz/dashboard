@@ -150,6 +150,11 @@ function exportTasks() {
     exportTasksContainer.style.display = 'flex';
     exportTasksContainer.classList.remove('hidden');
 
+    makeJsonTasks();
+    makeCSVTasks();
+}
+
+function makeJsonTasks() {
     var parser = new DOMParser();
     var tasksHTML = parser.parseFromString(tasksArray.toString(), "text/html").documentElement;
 
@@ -161,6 +166,33 @@ function exportTasks() {
 
     tasksJSON.innerHTML = JSON.stringify(jsons);
 }
+
+function makeCSVTasks() {
+    var parser = new DOMParser();
+    var tasksHTML = parser.parseFromString(tasksArray.toString(), "text/html").documentElement;
+
+    var convert = tasksHTML.getElementsByTagName('body')[0].getElementsByTagName('task');
+
+    var csvs = ["title, description, date, priority, progress <br>"];
+
+    var finalResult = '';
+
+    makeCSVArray(csvs, convert);
+
+    csvs.forEach(csv => {
+        finalResult += csv;
+    });
+
+    tasksCSV.innerHTML = finalResult;
+}
+
+function makeCSVArray(csvs, convert) {
+    for (let i = 0; i < convert.length; i++) {
+        var csv = `${convert[i].getElementsByTagName('tasktitle')[0].innerHTML},${convert[i].getElementsByTagName('taskdescription')[0].innerHTML},${convert[i].getElementsByTagName('taskdate')[0].innerHTML},${convert[i].getElementsByTagName('taskpriority')[0].innerHTML},${convert[i].getElementsByTagName('taskprogress')[0].innerHTML}<br>`;
+        csvs.push(csv);
+    }
+}
+
 
 function closeExportTasksMenu() {
     exportTasksContainer.style.animation = 'popupClose .6s ease-in-out';
