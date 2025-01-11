@@ -19,6 +19,18 @@
     --text-inverse-color: var(--main-inverse);
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--back-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--back-inverse-color);
+}
+
 img {
     filter: var(--main-image);
 }
