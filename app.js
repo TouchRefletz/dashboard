@@ -345,7 +345,119 @@ function startTimer() {
     }, 1000);
 }
 
+function createTimerDivs(timerDivs) {
+    for (var i = 0; i < 4; i++) {
+        var div = document.createElement('div');
+        div.classList.add('timer');
+        timerDivs.push(div);
+    }
+}
+
+function createUpButton(div) {
+    var a = document.createElement('a');
+    a.classList.add('timerButton');
+    a.classList.add('timerUp');
+    a.innerHTML = `
+        <!-- fonte: https://www.flaticon.com/br/icones-gratis/triangulo -->
+        <img src="imgs/seta.png" alt="Ícone de gráfico">
+    `;
+    div.appendChild(a);
+}
+
+function createDownButton(div) {
+    var a = document.createElement('a');
+    a.classList.add('timerButton');
+    a.classList.add('timerDown');
+    a.innerHTML = `
+        <!-- fonte: https://www.flaticon.com/br/icones-gratis/triangulo -->
+        <img src="imgs/seta.png" alt="Ícone de gráfico">
+    `;
+    div.appendChild(a);
+}
+
+function constructFrameTimerSlider(div1, names, index, div2, div, sequence1, sequence2) {
+    div1 = document.createElement('div');
+    div1.id = `frameTimerSlider${names[index]}`;
+    div1.classList.add('frameTimer');
+
+    constructTimerSlider(div2, names, index, div1, div, sequence1, sequence2);
+}
+
+function constructTimerSlider(div2, names, index, parentDiv, div, sequence1, sequence2) {
+    div2 = document.createElement('div');
+    div2.id = `timerSlider${names[index]}`;
+    div2.classList.add('timerSlider');
+    parentDiv.appendChild(div2);
+
+    constructTimerSliderContent(sequence1, sequence2, index, div, div2, parentDiv)
+}
+
+function constructTimerSliderContent(sequence1, sequence2, index, div, div2, div1) {
+    if (index != 2) {
+        for (var i = 0; i < sequence1.length; i++) {
+            var h1 = document.createElement('h1');
+            h1.innerHTML = sequence1[i];
+            div2.appendChild(h1);
+        }
+    } else {
+        for (var i = 0; i < sequence2.length; i++) {
+            var h1 = document.createElement('h1');
+            h1.innerHTML = sequence2[i];
+            div2.appendChild(h1);
+        }
+    }
+
+    div.appendChild(div1);
+}
+
+function createTimerSliderDivision() {
+    var div = div.createElement('div');
+    div.id = 'timerSliderDivision';
+    div.innerHTML = `
+        <h1>:</h1>
+    `;
+    slider.appendChild(div);
+}
+
+function createTimer(names, sequence1, sequence2, index, div) {
+    var div1;
+    var div2;
+
+    constructFrameTimerSlider(div1, names, index, div2, div, sequence1, sequence2);
+
+    if (index == 1) {
+        createTimerSliderDivision();
+    }
+
+    index++;
+}
+
+function constructTimer() {
+    slider.innerHTML = '';
+
+    var timerDivs = [];
+    var names = ['Hours1', 'Hours2', 'Minutes1', 'Minutes2'];
+    var sequence1 = [9,0,1,2,3,4,5,6,7,8,9,0];
+    var sequence2 = [5,0,1,2,3,4,5,0];
+
+    var index = 0
+
+    createTimerDivs(timerDivs);
+
+    timerDivs.forEach(div => {
+        createUpButton(div);
+
+        createTimer(names, sequence1, sequence2, index, div);
+
+        createDownButton(div);
+
+        slider.appendChild(div);
+    });
+}
+
 function showTimerMenu() {
+    constructTimer();
+
     timerContainer.classList.remove('hidden');
     timerContainer.style.display = 'flex';
 }
