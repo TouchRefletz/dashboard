@@ -148,7 +148,29 @@ function exportTasks() {
     exportTasksContainer.style.display = 'flex';
     exportTasksContainer.classList.remove('hidden');
 
-    tasksJSON.innerHTML = JSON.stringify(document.getElementById('tasks'));
+    var parser = new DOMParser();
+    var tasksHTML = parser.parseFromString(tasksArray.toString(), "text/html").documentElement;
+
+    var convert = tasksHTML.getElementsByTagName('body')[0].getElementsByTagName('task');
+
+    var jsons = [];
+
+    makeJsonArray(jsons, convert);
+
+    tasksJSON.innerHTML = JSON.stringify(jsons);
+}
+
+function makeJsonArray(jsons, convert) {
+    for (let i = 0; i < convert.length; i++) {
+        var json = {
+            title: convert[i].getElementsByTagName('tasktitle')[0].innerHTML,
+            description: convert[i].getElementsByTagName('taskdescription')[0].innerHTML,
+            date: convert[i].getElementsByTagName('taskdate')[0].innerHTML,
+            priority: convert[i].getElementsByTagName('taskpriority')[0].innerHTML,
+            progress: convert[i].getElementsByTagName('taskprogress')[0].innerHTML         
+        }
+        jsons.push(json);
+    }
 }
 
 function changeModeFromButton() {

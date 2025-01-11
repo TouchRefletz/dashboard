@@ -202,10 +202,10 @@ header {
 }
 
 #tasksJSON, #tasksCSV {
-    width: 200px;
     color: var(--text-color);
     border: var(--border-default);
     padding: 10px;
+    word-break: break-all;
 }
 
 #tasksExportInformation, #tasksExportInformation > div {
@@ -221,6 +221,7 @@ header {
 #tasksExportInformation > div {
     justify-content: center;
     flex-direction: column;
+    width: 50%;
 }
 
 #addFilter, #addTimer, #addTasks, #exportTasksDiv {
