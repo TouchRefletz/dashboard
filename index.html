@@ -63,6 +63,22 @@
             </div>
         </div>
 
+        <div id="exportTasksContainer" class="container hidden"> 
+            <div id="exportTasksDiv">
+                <div id="tasksExportInformation">
+                    <div>
+                        <h1>JSON</h1>
+                        <div id="tasksJSON">teste</div>
+                    </div>
+                    <div>
+                        <h1>CSV</h1>
+                        <div id="tasksCSV">teste</div>
+                    </div>
+                </div>
+                <button class="button" id="closeExportTasksMenu">Fechar</button>
+            </div>
+        </div>
+
         <div id="timerContainer" class="container hidden"> 
             <div id="addTimer">
                 <div id="slider">
@@ -185,7 +201,10 @@
             
         </div>
     
-        <h1 class="title" id="tasksTitle">Tarefas</h1>
+        <div id="taskInformation">
+            <h1 class="title" id="tasksTitle">Tarefas</h1>
+            <button class="button" id="exportTasks">Exportar</button>
+        </div>
         <div class="tasks" id="tasksDiv"></div>
     
         <div id="addTasksContainer" class="container hidden">

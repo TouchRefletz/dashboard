@@ -47,6 +47,27 @@ body {
     filter: var(--main-image-inverse);
 }
 
+#taskInformation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#exportTasksDiv {
+    color: var(--text-color);
+    font-family: "Chakra Petch", serif;
+    width: 50vw;
+    height: 50vh;
+    padding: 100px;
+    justify-content: center;
+    flex-direction: column;
+    background-color: var(--back-color);
+    border-radius: 25px;
+    border: var(--border-default);
+    box-shadow: var(--menus-shadow); /* distância x | distância y | blur | cor */
+}
+
 .title {
     color: var(--text-color);
     font-family: "Chakra Petch", serif;
@@ -180,7 +201,29 @@ header {
     flex-direction: column;
 }
 
-#addFilter, #addTimer, #addTasks {
+#tasksJSON, #tasksCSV {
+    width: 200px;
+    color: var(--text-color);
+    border: var(--border-default);
+    padding: 10px;
+}
+
+#tasksExportInformation, #tasksExportInformation > div {
+    display: flex;
+    align-items: center;
+}
+
+#tasksExportInformation {
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+#tasksExportInformation > div {
+    justify-content: center;
+    flex-direction: column;
+}
+
+#addFilter, #addTimer, #addTasks, #exportTasksDiv {
     max-width: 500px;
 }
 

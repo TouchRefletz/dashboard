@@ -25,6 +25,10 @@ var divActionButtons = document.getElementById('divActionButtons');
 var menu = document.getElementsByTagName('menu')[0];
 var changeLightButton = document.getElementById('changeLightButton');
 var modesImage = document.getElementById('modesImage');
+var exportTasksButton = document.getElementById('exportTasks');
+var exportTasksContainer = document.getElementById('exportTasksContainer');
+var tasksJSON = document.getElementById('tasksJSON');
+var tasksCSV = document.getElementById('tasksCSV');
 
 var timerButton = document.getElementById('timerButton');
 var timerContainer = document.getElementById('timerContainer');
@@ -129,6 +133,7 @@ function loadTasks() {
     timerFocusMode.addEventListener('click', timerFocus);
     timerTiredModeButton.addEventListener('click', timerTiredMode);
     changeLightButton.addEventListener('click', changeModeFromButton);
+    exportTasksButton.addEventListener('click', exportTasks);
 
     structureTasksInHtml();
     activateEditButtons();
@@ -137,6 +142,13 @@ function loadTasks() {
 
     var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
     showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu);
+}
+
+function exportTasks() {
+    exportTasksContainer.style.display = 'flex';
+    exportTasksContainer.classList.remove('hidden');
+
+    tasksJSON.innerHTML = JSON.stringify(document.getElementById('tasks'));
 }
 
 function changeModeFromButton() {
