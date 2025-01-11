@@ -5,6 +5,18 @@
     padding: 0;
 }
 
+:root {
+    --main: white;
+    --main-inverse: black;
+    --text-color: var(--main);
+    --back-color: var(--main-inverse);
+    --border-default: 1px solid var(--main);
+    --header-shadow: 0px 5px 5px var(--main);
+    --menus-shadow: 10px 5px 5px var(--main);
+    --back-inverse-color: var(--main);
+    --text-inverse-color: var(--main-inverse);
+}
+
 body {
     overflow-x: hidden;
 }
@@ -30,7 +42,7 @@ body {
 }
 
 .title {
-    color: white;
+    color: var(--text-color);
     font-family: "Chakra Petch", serif;
     text-align: center;
     font-size: 50px;
@@ -40,8 +52,8 @@ body {
 header {
     position: fixed;
     top: 0;
-    background-color: black;
-    box-shadow: 0px 5px 5px white; /* distância x | distância y | blur | cor */
+    background-color: var(--back-color);
+    box-shadow: var(--header-shadow); /* distância x | distância y | blur | cor */
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -174,8 +186,8 @@ menu {
     padding: 10px;
     margin: 10px;
     background-color: transparent;
-    border: 1px solid white;
-    color: white;
+    border: var(--border-default);
+    color: var(--text-color);
     border-radius: 5px;
     font-family: "Chakra Petch", serif;
     transition: all .3s ease-in-out;
@@ -186,9 +198,9 @@ menu {
 }
 
 .headerButton:hover {
-    background-color: white;
+    background-color: var(--back-inverse-color);
     transform: scale(1.1);
-    color: black;
+    color: var(--text-inverse-color);
     cursor: pointer;
 }
 
@@ -215,7 +227,7 @@ menu {
 }
 
 #headerContent > div > h1 {
-    color: white;
+    color: var(--text-color);
     font-family: "Chakra Petch", serif;
 }
 
@@ -257,9 +269,9 @@ menu {
 }
 
 #selectGraphics {
-    color: white;
+    color: var(--text-color);
     font-family: "Chakra Petch", serif;
-    background-color: black;
+    background-color: var(--back-color);
     border-radius: 5px;
 }
 
@@ -282,17 +294,17 @@ menu {
 }
 
 #graphicsColorsDiv > div > p {
-    color: white;
+    color: var(--text-color);
     font-family: "Chakra Petch", serif;
     font-size: 20px;
 }
 
 #search {
     background-color: transparent;
-    border: 1px solid white;
+    border: var(--border-default);
     border-radius: 50px;
     outline: none;
-    color: white;
+    color: var(--text-color);
     font-family: "Chakra Petch", serif;
     font-size: 20px;
     width: 75%;
@@ -348,7 +360,7 @@ menu {
 }
 
 #tasks {
-    color: white;
+    color: var(--text-color);
     font-family: "Chakra Petch", serif;
     transition: all .3s ease-in-out;
     display: flex;
@@ -366,8 +378,8 @@ menu {
     padding: 10px;
     margin: 10px;
     background-color: transparent;
-    border: 1px solid white;
-    color: white;
+    border: var(--border-default);
+    color: var(--text-color);
     border-radius: 5px;
     font-family: "Chakra Petch", serif;
     transition: all .3s ease-in-out;
@@ -380,9 +392,9 @@ menu {
 }
 
 .taskButtonsDiv > button:hover {
-    background-color: white;
+    background-color: var(--back-inverse-color);
     transform: scale(1.1);
-    color: black;
+    color: var(--text-inverse-color);
     cursor: pointer;
 }
 
@@ -411,16 +423,16 @@ menu {
     width: 300px;
     height: 300px;
     font-size: 50px;
-    color: white;
+    color: var(--text-color);
     border-radius: 20px;
-    border: 1px solid white;
+    border: var(--border-default);
     transition: all .3s ease-in-out;
 }
 
 #showAddTaskMenuButton:hover {
-    background-color: white;
+    background-color: var(--back-inverse-color);
     transform: scale(1.1);
-    color: black;
+    color: var(--text-inverse-color);
     cursor: pointer;
 }
 
@@ -459,13 +471,13 @@ menu {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid white;
+    border: var(--border-default);
     margin: 5px 0px;
 }
 
 #tasks {
     font-family: "Chakra Petch", serif;
-    color: white;
+    color: var(--text-color);
     margin: 10%;
     display: flex;
     align-items: center;
@@ -473,7 +485,7 @@ menu {
 }
 
 .task {
-    border: 1px solid white;
+    border: var(--border-default);
     margin: 20px;
     border-radius: 10px;
     padding: 10px;
@@ -484,24 +496,24 @@ menu {
 }
 
 body {
-    background-color: black;
+    background-color: var(--back-color);
     transition: all .3s ease-in-out;
 }
 
 .button {
     padding: 10px;
     background-color: transparent;
-    border: 1px solid white;
-    color: white;
+    border: var(--border-default);
+    color: var(--text-color);
     border-radius: 5px;
     font-family: "Chakra Petch", serif;
     transition: all .3s ease-in-out;
 }
 
 .button:hover {
-    background-color: white;
+    background-color: var(--back-inverse-color);
     transform: scale(1.1);
-    color: black;
+    color: var(--text-inverse-color);
     cursor: pointer;
 }
 
@@ -537,7 +549,7 @@ body {
 }
 
 #noTaskGraphicWarning {
-    color: white;
+    color: var(--text-color);
     font-family: "Chakra Petch", serif;
     text-align: center;
     font-size: 30px;
@@ -579,7 +591,7 @@ body {
 .timerButton {
     background-color: transparent;
     padding: 10px;
-    color: white;
+    color: var(--text-color);
     border-radius: 5px;
     font-family: "Chakra Petch", serif;
     transition: all .3s ease-in-out;
@@ -594,9 +606,9 @@ body {
 }
 
 .timerButton:hover {
-    background-color: white;
+    background-color: var(--back-inverse-color);
     transform: scale(1.1);
-    color: black;
+    color: var(--text-inverse-color);
     cursor: pointer;
 }
 
@@ -619,20 +631,20 @@ body {
 }
 
 .container > #addTimer {
-    color: white;
+    color: var(--text-color);
     font-family: "Chakra Petch", serif;
     width: 50vw;
     height: 50vh;
     padding: 100px;
     display: flex;
-    background-color: black;
+    background-color: var(--back-color);
     border-radius: 25px;
-    border: 1px solid white;
-    box-shadow: 10px 5px 5px white; /* distância x | distância y | blur | cor */
+    border: var(--border-default);
+    box-shadow: var(--menus-shadow); /* distância x | distância y | blur | cor */
 }
 
 .container > #addFilter {
-    color: white;
+    color: var(--text-color);
     font-family: "Chakra Petch", serif;
     width: 50vw;
     height: 50vh;
@@ -640,17 +652,17 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    background-color: black;
+    background-color: var(--back-color);
     border-radius: 25px;
-    border: 1px solid white;
-    box-shadow: 10px 5px 5px white; /* distância x | distância y | blur | cor */
+    border: var(--border-default);
+    box-shadow: var(--menus-shadow); /* distância x | distância y | blur | cor */
 }
 
 
 .container > #addFilter > select {
-    color: white;
+    color: var(--text-color);
     font-family: "Chakra Petch", serif;
-    background-color: black;
+    background-color: var(--back-color);
     border-radius: 5px;
 }
 
@@ -659,24 +671,24 @@ body {
 }
 
 .container > #addTasks {
-    color: white;
+    color: var(--text-color);
     font-family: "Chakra Petch", serif;
     width: 50vw;
     height: 50vh;
     padding: 100px;
     display: flex;
     flex-direction: column;
-    background-color: black;
+    background-color: var(--back-color);
     justify-content: center;
     border-radius: 25px;
-    border: 1px solid white;
-    box-shadow: 10px 5px 5px white; /* distância x | distância y | blur | cor */
+    border: var(--border-default);
+    box-shadow: var(--menus-shadow); /* distância x | distância y | blur | cor */
 }
 
 .container > #addTasks > select {
-    color: white;
+    color: var(--text-color);
     font-family: "Chakra Petch", serif;
-    background-color: black;
+    background-color: var(--back-color);
     border-radius: 5px;
 }
 
@@ -686,10 +698,10 @@ body {
 
 .container > #addTasks > input {
    background-color: transparent;
-   border: 1px solid white;
+   border: var(--border-default);
    border-radius: 5px;
    outline: none;
-   color: white;
+   color: var(--text-color);
    font-family: "Chakra Petch", serif;
    padding-left: 5px;
 }
