@@ -23,10 +23,12 @@ var searchContainer = document.getElementById('containerSearch');
 var tasksTitle = document.getElementById('tasksTitle');
 var divActionButtons = document.getElementById('divActionButtons');
 var menu = document.getElementsByTagName('menu')[0];
+
 var timerButton = document.getElementById('timerButton');
 var timerContainer = document.getElementById('timerContainer');
 var startTimerButton = document.getElementById('startTimer');
 var completeTimer = document.getElementById('completeTimer');
+var closeTimerButton = document.getElementById('closeTimer');
 
 var tasks = ``;
 var tasksArray = [];
@@ -107,13 +109,23 @@ function loadTasks() {
     changeSearchButton.addEventListener('click', changeSearch);
     timerButton.addEventListener('click', showTimerMenu);
     startTimerButton.addEventListener('click', startTimer);
+    closeTimerButton.addEventListener('click', closeTimer);
 
     structureTasksInHtml();
     activateEditButtons();
     activateDeleteButtons();
+    setUpTimerButtons();
 
     var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
     showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu);
+}
+
+function closeTimer() {
+    timerContainer.style.animation = 'popupClose .6s ease-in-out';
+    setTimeout(() => {
+        timerContainer.removeAttribute('style');
+        timerContainer.classList.add('hidden');
+    }, 300);
 }
 
 function runTimerForSlider(index) {
@@ -195,7 +207,9 @@ function startTimer() {
 function showTimerMenu() {
     timerContainer.classList.remove('hidden');
     timerContainer.style.display = 'flex';
+}
 
+function setUpTimerButtons() {
     var timerUps = document.getElementsByClassName('timerUp');
     var timerDowns = document.getElementsByClassName('timerDown');
 
