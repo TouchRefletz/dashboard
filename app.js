@@ -26,6 +26,7 @@ var menu = document.getElementsByTagName('menu')[0];
 var timerButton = document.getElementById('timerButton');
 var timerContainer = document.getElementById('timerContainer');
 var startTimerButton = document.getElementById('startTimer');
+var completeTimer = document.getElementById('completeTimer');
 
 var tasks = ``;
 var tasksArray = [];
@@ -146,6 +147,7 @@ function resetTimerElement(sliderElement) {
 function checkIfTimerEnded(i) {
     if (i < 0) {
         timerEnded = true;
+        completeTimer.play();
         return;
     }
 
