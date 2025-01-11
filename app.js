@@ -33,6 +33,7 @@ var completeTimer = document.getElementById('completeTimer');
 var closeTimerButton = document.getElementById('closeTimer');
 var timerFocusMode = document.getElementById('timerFocusMode');
 var timerTiredModeButton = document.getElementById('timerTiredMode');
+var mode;
 
 var tasks = ``;
 var tasksArray = [];
@@ -96,11 +97,22 @@ function syncTasks() {
     }
 }
 
+function syncFavoriteMode() {
+    mode = localStorage.getItem('mode');
+    if (mode == null) {
+        localStorage.setItem('mode', 'dark');
+    }
+
+    changeMode();
+}
+
 function loadTasks() {
     if (editTaskBoolean) {
         addTaskButton.removeEventListener('click', callEditButton);
         addTaskButton.addEventListener('click', createTask);
     }
+
+    syncFavoriteMode();
 
     syncTasks();
     
@@ -116,7 +128,7 @@ function loadTasks() {
     closeTimerButton.addEventListener('click', closeTimer);
     timerFocusMode.addEventListener('click', timerFocus);
     timerTiredModeButton.addEventListener('click', timerTiredMode);
-    changeLightButton.addEventListener('click', changeMode);
+    changeLightButton.addEventListener('click', changeModeFromButton);
 
     structureTasksInHtml();
     activateEditButtons();
@@ -127,10 +139,18 @@ function loadTasks() {
     showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu);
 }
 
+function changeModeFromButton() {
+    if (localStorage.getItem('mode') == 'dark') {
+        localStorage.setItem('mode', 'light');
+    } else {
+        localStorage.setItem('mode', 'dark');
+    }
+    changeMode();
+}
+
 function changeMode() {
     var root = document.querySelector(':root');
-    var rootStyles = getComputedStyle(root);
-    if (rootStyles.getPropertyValue('--main') == 'black') {
+    if (localStorage.getItem('mode') == 'dark') {
         root.style.setProperty('--main', 'white');
         root.style.setProperty('--main-inverse', 'black');
         root.style.setProperty('--main-image', 'invert(0)');
