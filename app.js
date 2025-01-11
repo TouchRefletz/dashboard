@@ -29,6 +29,7 @@ var exportTasksButton = document.getElementById('exportTasks');
 var exportTasksContainer = document.getElementById('exportTasksContainer');
 var tasksJSON = document.getElementById('tasksJSON');
 var tasksCSV = document.getElementById('tasksCSV');
+var closeExportTasksMenuButton = document.getElementById('closeExportTasksMenu');
 
 var timerButton = document.getElementById('timerButton');
 var timerContainer = document.getElementById('timerContainer');
@@ -134,6 +135,7 @@ function loadTasks() {
     timerTiredModeButton.addEventListener('click', timerTiredMode);
     changeLightButton.addEventListener('click', changeModeFromButton);
     exportTasksButton.addEventListener('click', exportTasks);
+    closeExportTasksMenuButton.addEventListener('click', closeExportTasksMenu);
 
     structureTasksInHtml();
     activateEditButtons();
@@ -158,6 +160,14 @@ function exportTasks() {
     makeJsonArray(jsons, convert);
 
     tasksJSON.innerHTML = JSON.stringify(jsons);
+}
+
+function closeExportTasksMenu() {
+    exportTasksContainer.style.animation = 'popupClose .6s ease-in-out';
+    setTimeout(() => {
+        exportTasksContainer.removeAttribute('style');
+        exportTasksContainer.classList.add('hidden');
+    }, 300);
 }
 
 function makeJsonArray(jsons, convert) {

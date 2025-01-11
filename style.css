@@ -577,6 +577,7 @@ body {
     align-items: center;
     justify-content: center;
     animation: popupOpen .3s ease-in-out;
+    z-index: 999;
 }
 
 @keyframes popupOpen {
