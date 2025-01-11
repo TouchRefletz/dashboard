@@ -62,10 +62,18 @@ body {
     padding: 100px;
     justify-content: center;
     flex-direction: column;
+    display: flex;
+    align-items: center;
     background-color: var(--back-color);
     border-radius: 25px;
     border: var(--border-default);
     box-shadow: var(--menus-shadow); /* distância x | distância y | blur | cor */
+}
+
+#exportTasksDiv > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .title {
