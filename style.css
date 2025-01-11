@@ -162,6 +162,10 @@ header {
     flex-direction: column;
 }
 
+#addFilter, #addTimer, #addTasks {
+    max-width: 500px;
+}
+
 menu {
     display: flex;
 }
