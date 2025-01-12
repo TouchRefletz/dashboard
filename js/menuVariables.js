@@ -1,0 +1,1 @@
+var menu = document.getElementsByTagName('menu')[0];
