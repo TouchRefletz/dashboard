@@ -1,16 +1,5 @@
 /* FUNÇÔES */
 
-function saveTasks() {
-    tasks = ``;
-    tasks += `<tasks>`
-    tasksArray.forEach(task => {
-            tasks += task;
-    })
-    tasks += `</tasks>`
-    localStorage.setItem('tasks',tasks.toString())
-    loadTasks();
-}
-
 function search() {
     searching = true;
     loadTasks();
@@ -34,20 +23,6 @@ function activateSearch() {
     }
 }
 
-function syncTasks() {
-    tasks = localStorage.getItem('tasks');
-    if (tasks != null) {
-        const parser = new DOMParser(); // Transformador de XML
-        const xmlDoc = parser.parseFromString(tasks, "text/xml");
-        tasksXML = xmlDoc.documentElement;
-
-        const tasksElements = tasksXML.querySelectorAll('task');
-        const taskArray = Array.from(tasksElements).map(task => task.outerHTML);
-        tasksId = Array.from(tasksElements).map(task => Number(task.id));
-        tasksArray = taskArray;
-    }
-}
-
 function syncFavoriteMode() {
     mode = localStorage.getItem('mode');
     if (mode == null) {
@@ -55,110 +30,6 @@ function syncFavoriteMode() {
     }
 
     changeMode();
-}
-
-function loadTasks() {
-    if (editTaskBoolean) {
-        addTaskButton.removeEventListener('click', callEditButton);
-        addTaskButton.addEventListener('click', createTask);
-    }
-
-    syncFavoriteMode();
-
-    syncTasks();
-    
-    addTaskButton.addEventListener('click', createTask);
-    closeTaskMenuButton.addEventListener('click', closeTaskMenu);
-    searchButton.addEventListener('click', search);
-    filterButton.addEventListener('click', filter);
-    chooseFilterButton.addEventListener('click', closeFilterMenu);
-    searchInput.addEventListener('input', activateSearch);
-    changeSearchButton.addEventListener('click', changeSearch);
-    timerButton.addEventListener('click', showTimerMenu);
-    startTimerButton.addEventListener('click', startTimer);
-    closeTimerButton.addEventListener('click', closeTimer);
-    timerFocusMode.addEventListener('click', timerFocus);
-    timerTiredModeButton.addEventListener('click', timerTiredMode);
-    changeLightButton.addEventListener('click', changeModeFromButton);
-    exportTasksButton.addEventListener('click', exportTasks);
-    closeExportTasksMenuButton.addEventListener('click', closeExportTasksMenu);
-
-    structureTasksInHtml();
-    activateEditButtons();
-    activateDeleteButtons();
-    setUpTimerButtons();
-
-    var showAddTaskMenuButton = document.getElementById("showAddTaskMenuButton");
-    showAddTaskMenuButton.addEventListener("click", openTaskManagerMenu);
-}
-
-function exportTasks() {
-    exportTasksContainer.style.display = 'flex';
-    exportTasksContainer.classList.remove('hidden');
-
-    makeJsonTasks();
-    makeCSVTasks();
-}
-
-function makeJsonTasks() {
-    var parser = new DOMParser();
-    var tasksHTML = parser.parseFromString(tasksArray.toString(), "text/html").documentElement;
-
-    var convert = tasksHTML.getElementsByTagName('body')[0].getElementsByTagName('task');
-
-    var jsons = [];
-
-    makeJsonArray(jsons, convert);
-
-    tasksJSON.innerHTML = JSON.stringify(jsons);
-}
-
-function makeCSVTasks() {
-    var parser = new DOMParser();
-    var tasksHTML = parser.parseFromString(tasksArray.toString(), "text/html").documentElement;
-
-    var convert = tasksHTML.getElementsByTagName('body')[0].getElementsByTagName('task');
-
-    var csvs = ["title, description, date, priority, progress <br>"];
-
-    var finalResult = '';
-
-    makeCSVArray(csvs, convert);
-
-    csvs.forEach(csv => {
-        finalResult += csv;
-    });
-
-    tasksCSV.innerHTML = finalResult;
-}
-
-function makeCSVArray(csvs, convert) {
-    for (let i = 0; i < convert.length; i++) {
-        var csv = `${convert[i].getElementsByTagName('tasktitle')[0].innerHTML},${convert[i].getElementsByTagName('taskdescription')[0].innerHTML},${convert[i].getElementsByTagName('taskdate')[0].innerHTML},${convert[i].getElementsByTagName('taskpriority')[0].innerHTML},${convert[i].getElementsByTagName('taskprogress')[0].innerHTML}<br>`;
-        csvs.push(csv);
-    }
-}
-
-
-function closeExportTasksMenu() {
-    exportTasksContainer.style.animation = 'popupClose .6s ease-in-out';
-    setTimeout(() => {
-        exportTasksContainer.removeAttribute('style');
-        exportTasksContainer.classList.add('hidden');
-    }, 300);
-}
-
-function makeJsonArray(jsons, convert) {
-    for (let i = 0; i < convert.length; i++) {
-        var json = {
-            title: convert[i].getElementsByTagName('tasktitle')[0].innerHTML,
-            description: convert[i].getElementsByTagName('taskdescription')[0].innerHTML,
-            date: convert[i].getElementsByTagName('taskdate')[0].innerHTML,
-            priority: convert[i].getElementsByTagName('taskpriority')[0].innerHTML,
-            progress: convert[i].getElementsByTagName('taskprogress')[0].innerHTML         
-        }
-        jsons.push(json);
-    }
 }
 
 function changeModeFromButton() {

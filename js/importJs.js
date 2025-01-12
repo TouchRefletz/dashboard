@@ -4,6 +4,8 @@ function importJs(scriptSrc) {
     document.body.appendChild(script);
 }
 
+importJs('js/tasksFunctions.js');
+
 importJs('js/tasksVariables.js');
 importJs('js/searchVariables.js');
 importJs('js/graphicsVariables.js');
