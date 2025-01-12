@@ -105,6 +105,7 @@ header {
     align-items: center;
     flex-direction: column;
     width: 100vw;
+    z-index: 999;
 }
 
 @media (max-width: 700px) {
