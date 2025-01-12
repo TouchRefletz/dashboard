@@ -155,7 +155,6 @@ function closeMenu(element) {
     }, 300);
 }
 
-
 function closeExportTasksMenu() {
     closeMenu(exportTasksContainer);
 }
