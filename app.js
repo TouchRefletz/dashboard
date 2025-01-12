@@ -15,6 +15,7 @@ var searchInput = document.getElementById('search');
 var filterButton = document.getElementById("filterButton");
 var filterContainer = document.getElementById('filterContainer');
 var chooseFilterButton = document.getElementById("chooseFilterButton");
+var closeSearchButton = document.getElementById('closeSearchButton');
 var selectFilter = document.getElementById('selectFilter');
 var changeSearchButton = document.getElementById('changeSearch');
 var searchContainer = document.getElementById('containerSearch');
@@ -94,21 +95,24 @@ function resetAddTaskButton() {
 }
 
 function addEventListenersToButtons() {
-    addTaskButton.addEventListener("click", createTask);
-    closeTaskMenuButton.addEventListener("click", closeTaskMenu);
-    searchButton.addEventListener("click", search);
-    filterButton.addEventListener("click", filter);
-    chooseFilterButton.addEventListener("click", closeFilterMenu);
-    searchInput.addEventListener("input", activateSearch);
-    changeSearchButton.addEventListener("click", changeSearch);
+    if (window.location.pathname != "/graphics.html") {
+        addTaskButton.addEventListener("click", createTask);
+        closeTaskMenuButton.addEventListener("click", closeTaskMenu);
+        searchButton.addEventListener("click", search);
+        filterButton.addEventListener("click", filter);
+        chooseFilterButton.addEventListener("click", closeFilterMenu);
+        searchInput.addEventListener("input", activateSearch);
+        changeSearchButton.addEventListener("click", changeSearch);
+        exportTasksButton.addEventListener("click", exportTasks);
+        closeExportTasksMenuButton.addEventListener("click", closeExportTasksMenu);
+        closeSearchButton.addEventListener('click', closeSearch);
+    }
     timerButton.addEventListener("click", showTimerMenu);
     startTimerButton.addEventListener("click", startTimer);
     closeTimerButton.addEventListener("click", closeTimer);
     timerFocusMode.addEventListener("click", timerFocus);
     timerTiredModeButton.addEventListener("click", timerTiredMode);
     changeLightButton.addEventListener("click", changeModeFromButton);
-    exportTasksButton.addEventListener("click", exportTasks);
-    closeExportTasksMenuButton.addEventListener("click", closeExportTasksMenu);
 }
 
 function addCreateTaskButtonToHTML() {
@@ -117,15 +121,17 @@ function addCreateTaskButtonToHTML() {
 }
 
 function loadTasks() {
-    resetAddTaskButton();
+    if (window.location.pathname != "/graphics.html") {
+        resetAddTaskButton();
+        structureTasksInHtml();
+        activateEditButtons();
+        activateDeleteButtons();
+        addCreateTaskButtonToHTML();
+    }
+    addEventListenersToButtons();
     syncFavoriteMode();
     syncTasks();
-    addEventListenersToButtons();
-    structureTasksInHtml();
-    activateEditButtons();
-    activateDeleteButtons();
     setUpTimerButtons();
-    addCreateTaskButtonToHTML();
 }
 
 function showMenu(element) {
@@ -134,8 +140,12 @@ function showMenu(element) {
 }
 
 function exportTasks() {
-    showMenu(exportTasksContainer);
-    constructExportTasks();
+    if (tasksArray.length > 0) {
+        showMenu(exportTasksContainer);
+        constructExportTasks();
+    } else {
+        alert('Você precisa ter tarefas para poder exportá-las.')
+    }
 }
 
 function constructExportTasks() {
@@ -299,6 +309,8 @@ function constructTasks() {
     var tasksMainDiv = tasks != null ? tasksXML.getElementsByTagName('tasks') : null;
     var finalResult = createHTMLTaskDivWithId("tasks");
 
+    resetTasksDiv();
+
     startTasksConstruction(tasksMainDiv, finalResult, tasks);
     sendResultToHTML(finalResult);
 }
@@ -375,6 +387,9 @@ function changeMode() {
         root.style.setProperty('--main-image', 'invert(1)');
         root.style.setProperty('--main-image-inverse', 'invert(0)');
         modesImage.src = "imgs/dark mode.png";
+    }
+    if (window.location.pathname == '/graphics.html') {
+        constructGraphics();
     }
 }
 
@@ -687,59 +702,38 @@ function addButtons(buttons) {
     return bDiv;
 }
 
+function closeSearch() {
+    var searchDiv = document.getElementById('searchDiv');
+
+    searchContainer.style.animation = 'popupClose .6s ease-in-out';
+    divActionButtons.style.animation = 'popupClose .6s ease-in-out';
+    searchDiv.style.animation = 'fadeout .6s ease-in-out';
+
+    setTimeout(() => {
+        searchContainer.classList.add('hidden');
+        divActionButtons.classList.add('hidden');
+        searchDiv.classList.add('hidden');
+        searchContainer.removeAttribute('style');
+        divActionButtons.removeAttribute('style');
+        searchDiv.removeAttribute('style');
+    }, 300);
+}
+
 function changeSearch() {
-    var width = window.innerWidth;
-    if (searchContainer.classList.contains('hidden')) {
-        searchContainer.classList.remove('hidden');
-        divActionButtons.classList.remove('hidden');
-        divActionButtons.style.display = 'flex';
-        searchContainer.style.display = 'flex';
+    var searchDiv = document.getElementById('searchDiv');
 
-        if (width <= 530) {
-            if (width <= 330) {
-                if (width <= 300) {
-                    if (menu.style.display == 'none') {
-                        pageContent.style.marginTop = '500px';
-                    } else {
-                        pageContent.style.marginTop = '600px';
-                    }
-                } else {
-                    pageContent.style.marginTop = '300px';
-                }
-            } else {
-                pageContent.style.marginTop = '350px';
-            }
-        } else {
-            pageContent.style.marginTop = '300px';
-        }
-    } else {
-        searchContainer.style.animation = 'popupClose .6s ease-in-out';
-        divActionButtons.style.animation = 'popupClose .6s ease-in-out';
+    menu.style.animation = "fadeout .6s ease-in-out";
 
-        setTimeout(() => {
-            searchContainer.classList.add('hidden');
-            divActionButtons.classList.add('hidden');
-            searchContainer.removeAttribute('style');
-            divActionButtons.removeAttribute('style');
-            if (width <= 530) {
-                if (width <= 330) {
-                    if (width <= 300) {
-                        if (menu.style.display == 'none') {
-                            pageContent.style.marginTop = '350px';
-                        } else {
-                            pageContent.style.marginTop = '500px';
-                        }
-                    } else {
-                        pageContent.style.marginTop = '200px';
-                    }
-                } else {
-                    pageContent.style.marginTop = '250px';
-                }
-            } else {
-                pageContent.style.marginTop = '200px';
-            }
-        }, 300);
-    }
+    setTimeout(() => {
+        menu.style.display = 'none';
+    },300);
+
+    searchContainer.classList.remove('hidden');
+    divActionButtons.classList.remove('hidden');
+    searchDiv.classList.remove('hidden');
+    divActionButtons.style.display = 'flex';
+    searchContainer.style.display = 'flex';
+    searchDiv.style.display = 'flex';
 }
 
 function closeFilterMenu() {
@@ -897,18 +891,24 @@ function arcCircle(centerX, centerY, radius, startAngle, endAngle, color) {
     let currentAngle = startAngle;
 
     function drawStep() {
-        if (Number(currentAngle.toFixed(2)) > endAngle) return; // Sai quando o ângulo final for alcançado
+        if (currentAngle >= endAngle) return; // Sai quando o ângulo final for alcançado
 
         drawInGraphics.fillStyle = color;
         drawInGraphics.beginPath();
-        drawInGraphics.moveTo(centerX, centerY);
-        drawInGraphics.arc(centerX, centerY, radius, startAngle * Math.PI, currentAngle * Math.PI);
-        drawInGraphics.lineTo(centerX, centerY);
-        drawInGraphics.closePath();
+        drawInGraphics.moveTo(centerX, centerY); // Conecta o centro ao arco
+        drawInGraphics.arc(
+            centerX,
+            centerY,
+            radius,
+            currentAngle * Math.PI,
+            Math.min(currentAngle + 0.1, endAngle) * Math.PI
+        );
+        drawInGraphics.closePath(); // Fecha o caminho
         drawInGraphics.fill();
 
-        currentAngle += 0.1; // Incrementa o ângulo
-        setTimeout(drawStep, 50); // Próxima execução em 10ms
+        // Incrementa o ângulo e avança
+        currentAngle += 0.01; // Pequenos incrementos para suavidade
+        setTimeout(drawStep, 1); // Próxima execução em 50ms
     }
 
     drawStep(); // Inicia o desenho
@@ -924,6 +924,9 @@ function constructPizzaGraphics(radius) {
 
     var taskUnfinished = 0;
     var taskNotStarted = 0;
+
+    const rootStyles = getComputedStyle(document.documentElement);
+    const backInverseColor = rootStyles.getPropertyValue('--back-inverse-color').trim();
 
     for (var i = 0; i < tasksArray.length; i++) {
         const regex = /<taskProgress>(.*?)<\/taskProgress>/; // Captura o conteúdo dentro de <taskProgress>
@@ -941,14 +944,15 @@ function constructPizzaGraphics(radius) {
     var taskUnfinishedPercent = (2 * taskUnfinished) / tasksArray.length;
     var taskNotStartedPercent = (2 * taskNotStarted) / tasksArray.length;
 
+
     taskUnfinishedPercent = taskUnfinishedPercent;
     taskNotStartedPercent = taskNotStartedPercent;
 
     drawInGraphics.clearRect(0, 0, graphics.width, graphics.height);
 
     arcCircle(centerX, centerY, radius, 0, taskNotStartedPercent, 'red');
-    arcCircle(centerX, centerY, radius, taskNotStartedPercent, taskNotStartedPercent + taskUnfinishedPercent, 'white');
-    arcCircle(centerX, centerY, radius, taskUnfinishedPercent + taskNotStartedPercent,  2, 'green');
+    arcCircle(centerX, centerY, radius, taskNotStartedPercent, taskNotStartedPercent + taskUnfinishedPercent, backInverseColor);
+    arcCircle(centerX, centerY, radius, taskNotStartedPercent + taskUnfinishedPercent, 2, 'green');
 }
 
 function createGraphicBar(percent, color) {
@@ -1039,6 +1043,7 @@ function resizeGraphics(info) {
 }
 
 function createMenuButton(headerContent) {
+    menu.style.display = 'none';
     var button = document.createElement('button');
     button.innerHTML = `
     <!-- fonte: https://www.flaticon.com/br/icones-gratis/menu-aberto -->
@@ -1047,95 +1052,29 @@ function createMenuButton(headerContent) {
     button.id = 'menuButton';
     button.classList.add('button');
     button.addEventListener("click", changeMenuState);
-    headerContent.insertBefore(button, document.getElementsByTagName('menu')[0]);
+    headerContent.appendChild(button);
 }
 
 function changeMenuState() {
     var menu = document.getElementsByTagName('menu')[0];
-    var pageContent = document.getElementById('pageContent');
 
     if (menu.style.display == 'none') {
         menu.removeAttribute('style');
-        if (window.location.pathname == '/graphics.html') {
-            pageContent.style.marginTop = '400px';
-        } else {
-            pageContent.style.marginTop = '500px';
-        }
     } else {
-        if (!searchContainer.classList.contains('hidden')) {
-            pageContent.style.marginTop = '300px';
-        } else {
-            pageContent.removeAttribute('style');
-        }
         menu.style.display = 'none';
     }
 }
 
 function changePageWithWidth(info) {
-    var width;
-
-    if (info == undefined) {
-        width = window.innerWidth;
-    } else {
-        width = info.target.innerWidth;
-    }
-    
-    if (width <= 530) {
-        if (width >= 330) {
-            pageContent.style.marginTop = '250px';
-        }
-    } else {
-        pageContent.style.marginTop = '200px';
-    }
-
-    changeMenu(info);
-    if (window.location.pathname != '/graphics.html') {
-        changeSearchStyle(info);
-    }
-}
-
-function changeSearchStyle(info) {
-    var width;
-
-    if (info == undefined) {
-        width = window.innerWidth;
-    } else {
-        width = info.target.innerWidth;
-    }
-
-    if (width <= 430) {
-        divActionButtons.style.position = 'static';
-        divActionButtons.style.marginBottom = '30px';
-        searchInput.style.textAlign = 'center';
-    } else {
-        divActionButtons.removeAttribute('style');
-        searchInput.removeAttribute('style');
-    }
+    changeMenu();
 }
 
 function changeMenu(info) {
-    var width;
-
-    if (info == undefined) {
-        width = window.innerWidth;
-    } else {
-        width = info.target.innerWidth;
-    }
-
-    var headerContent = menu.parentElement;
+    var headerContent = document.getElementById('headerContent');
     var button = document.getElementById('menuButton');
 
-    if (width <= 300) {
-        menu.style.display = 'none';
-        
-        if (button == undefined) {
-            createMenuButton(headerContent);
-        }
-    } else {
-        if (button != undefined) {
-            headerContent.removeChild(button);
-        }
-        menu.removeAttribute('style');
+    if (button == undefined) {
+        createMenuButton(headerContent);
     }
 }
 
@@ -1143,9 +1082,8 @@ function changeMenu(info) {
 
 syncTasks();
 
-if (tasksDiv) {
-    loadTasks();
-}
+loadTasks();
+
 
 if (window.location.pathname == '/graphics.html') {
     constructGraphics();

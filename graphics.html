@@ -17,23 +17,31 @@
                 </a>
                 <h1>TaskManager</h1>
             </div>
-            <menu>
-                <a href="index.html" class="headerButton">
-                    <!-- fonte: https://www.flaticon.com/free-icons/discover -->
-                    <img src="imgs/tasks.png" alt="Ícone da logo do site">
-                </a>
-                <a href="graphics.html" class="headerButton">
-                    <!-- fonte: https://www.flaticon.com/free-icons/graph-pie -->
-                    <img src="imgs/graphics.png" alt="Ícone de gráfico">
-                </a>
-            </menu>
         </div>
-        <div id="containerSearch" class="hidden">
-            <input id="search" type="text" placeholder="Pesquisar tarefa por Título">
-            <button id="searchButton">🔍</button>
-            <button id="filterButton">🔘</button>
-        </div>  
     </header>
+
+    <menu>
+        <a href="index.html" class="headerButton">
+            <!-- fonte: https://www.flaticon.com/free-icons/discover -->
+            <img src="imgs/tasks.png" alt="Ícone da logo do site">
+            Tarefas
+        </a>
+        <a href="graphics.html" class="headerButton">
+            <!-- fonte: https://www.flaticon.com/free-icons/graph-pie -->
+            <img src="imgs/graphics.png" alt="Ícone de gráfico">
+            Gráfico
+        </a>
+        <a class="headerButton" id="timerButton">
+            <!-- fonte: https://www.flaticon.com/free-icons/timer -->
+            <img src="imgs/timer.png" alt="Ícone de timer">
+            Timer
+        </a>
+        <a class="headerButton" id="changeLightButton">
+            <!-- fonte: https://www.flaticon.com/free-icons/night-mode e https://www.flaticon.com/free-icons/mode -->
+            <img src="imgs/light mode.png" alt="Ícone de modo" id="modesImage">
+            Trocar modo
+        </a>
+    </menu>
 
     <div id="pageContent">
         <div id="filterContainer" class="container hidden"> 
@@ -47,6 +55,29 @@
                     <option value="taskprogress">Status</option>
                 </select>
                 <button class="button" id="chooseFilterButton">Selecionar filtro</button>
+            </div>
+        </div>
+
+        <div id="searchDiv" class="hidden">
+            <div id="containerSearch" class="hidden">
+                <input id="search" type="text" placeholder="Pesquisar tarefa por Título">
+            </div>  
+            <div id="divActionButtons" class="hidden">
+                <button id="searchButton">🔍</button>
+                <button id="filterButton">🔘</button>
+                <button id="closeSearchButton">❌</button>
+            </div>
+        </div>
+
+        <div id="timerContainer" class="container hidden"> 
+            <div id="addTimer">
+                <div id="slider"></div>
+                <div id="timerButtons">
+                    <button class="button" id="startTimer">Iniciar timer</button>
+                    <button class="button" id="timerFocusMode">Foco</button>
+                    <button class="button" id="timerTiredMode">Descanso</button>
+                    <button class="button" id="closeTimer">Fechar</button>
+                </div>
             </div>
         </div>
     
@@ -70,7 +101,7 @@
                         </div>
                         
                         <div>
-                            <div style="background-color: white;"></div>
+                            <div style="background-color: var(--back-inverse-color);"></div>
                             <p>Tarefas Em Andamento</p>
                         </div>
                         
