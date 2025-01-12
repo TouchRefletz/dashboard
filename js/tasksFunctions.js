@@ -1,20 +1,11 @@
 function saveTasks() {
-    resetTasksXML();
-    tasksArray.forEach(task => {
-            tasks += task;
-    })
+    tasks = `<tasks>${tasksArray.join('')}</tasks>`;
     saveTasksXML();
 }
 
 function saveTasksXML() {
-    tasks += `</tasks>`;
     localStorage.setItem('tasks',tasks.toString());
     loadTasks();
-}
-
-function resetTasksXML() {
-    tasks = ``;
-    tasks += `<tasks>`;
 }
 
 function syncTasks() {
@@ -39,7 +30,6 @@ function refreshTasksLocally() {
 
 function pullTasksFromLocalStorage() {
     tasksXML = convertContentWithDomParser(tasks, 'text/xml');
-
     refreshTasksLocally();
 }
 
